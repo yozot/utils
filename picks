@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.3 2003/03/19 12:40:52 yozo Exp $
+## $Id: picks,v 1.4 2003/04/20 00:12:03 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -83,6 +83,8 @@ do_command pick sender     rsnt          metrorsnt
 do_command pick sender     owner-tnt     metrotnt
 do_command pick x-ml-name  semiken       metrosemiken
 do_command pick sender     owner-ug      metroug
+
+do_command pick x-ml-name  comp-alge     compalge
 
 do_command pick from       "SDC Program" sunsdc
 do_command search "solaris develop"      sunsoldc
