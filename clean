@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: clean,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## $Id: clean,v 1.1.1.1 2002/12/05 17:04:16 yozo Exp $
 ## clean: remove useless files in dist directory
 ## -- yozo.  Sat Nov 17 15:55:32 JST 2001
 

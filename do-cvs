@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: do-cvs,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## $Id: do-cvs,v 1.1.1.1 2002/12/05 17:04:16 yozo Exp $
 ## do-cvs
 ## -- yozo.  Thu Mar 22 12:02:49 JST 2001
 ## starting messages fixed -- yozo.  Thu May 10 11:29:53 JST 2001

@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: vaio,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: vaio,v 1.1.1.1 2002/12/05 17:04:15 yozo Exp $
 
 PATH=/bin:/usr/bin:/usr/local/bin
 

@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: checksites,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## $Id: checksites,v 1.1.1.1 2002/12/05 17:04:16 yozo Exp $
 ## check and see if the top pages of the sites have changed
 
 progname=`basename $0`

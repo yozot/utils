@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xf4,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: make-xf4,v 1.1.1.1 2002/12/05 17:04:15 yozo Exp $
 ## make-xf4 script based on make-x11
 ## if you wanna record the output, type
 ##     (make-xf4 >& logfile) &

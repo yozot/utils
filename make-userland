@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-userland,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: make-userland,v 1.1.1.1 2002/12/05 17:04:15 yozo Exp $
 ## make-userland script
 ## if you wanna record the output, type
 ##     (make-userland >& logfile) &

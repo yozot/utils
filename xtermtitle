@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: xtermtitle,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## $Id: xtermtitle,v 1.1.1.1 2002/12/05 17:04:16 yozo Exp $
 ## xtermtitle: set xterm icon and window title string using escape string.
 ## see ${X11}/xc/doc/specs/xterm/ctlseqs.ms
 ## -- yozo.  Thu Sep  2 17:32:49 JST 1999

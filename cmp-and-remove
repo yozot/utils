@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: cmp-and-remove,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## $Id: cmp-and-remove,v 1.1.1.1 2002/12/05 17:04:16 yozo Exp $
 ## for manual updating operation -- yozo.  Thu Apr 26 16:03:19 JST 2001
 
 ## echo $*

@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: rotlogs,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: rotlogs,v 1.1.1.1 2002/12/05 17:04:15 yozo Exp $
 ##
 ## log-make-fakedist added -- yozo.  Fri Dec 21 06:46:00 JST 2001
 ##
