@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xf4,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: make-xf4,v 1.2 2004/12/05 16:29:33 yozo Exp $
 ## make-xf4 script based on make-x11
 ## if you wanna record the output, type
 ##     (make-xf4 >& logfile) &
@@ -90,10 +90,10 @@ echo
 
 ## i386 architecture requires tcltk-8.3 package
 mach=`/usr/bin/uname -m`
-tkq=`/usr/sbin/pkg_info | grep tk-8.3`
+tkq=`/usr/sbin/pkg_info | grep tk-8.`
 if [ ${mach} = "i386" -a "X${tkq}" = "X" ]; then
-  echo "$0: tk-8.3 required on this architecture(${mach})."
-  echo "$0: install tk-8.3 package before executing me."
+  echo "$0: tk-8.? required on this architecture(${mach})."
+  echo "$0: install tk-8.? package before executing me."
   echo "$0: see release(8) man page."
   exit 40
 fi

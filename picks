@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.10 2003/07/10 17:34:50 yozo Exp $
+## $Id: picks,v 1.11 2004/12/05 16:29:33 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -57,76 +57,83 @@ echo "current folder: \c"
 folder
 echo
 
-do_command pick list-owner cert-advisory cert
-do_command pick sender     snmp-forum    certsnmp
-do_command pick reply-to   @jpcert       jpcert
-do_command pick list-id    bugtraq-jp    traqjp
+do_command pick list-owner  cert-advisory cert
+## do_command pick sender     snmp-forum    certsnmp
+do_command pick return-path @us-cert.gov uscert
+do_command pick reply-to    @jpcert       jpcert
+do_command pick list-id     bugtraq-jp    traqjp
+do_command pick return-path magazine@cyberpolice    cyberpolice
 
 do_command pick return-path v-networkservice vaio
-do_command pick return-path stylemail@jp.sonystyle.com sonystyle
+do_command pick return-path sonystyle.com sonystyle
 do_command pick return-path mysony@      mysony
-do_command pick subject    "TOSHIBA PC"  toshiba
-do_command pick sender     mn128-soho    mn128
+do_command pick subject     "TOSHIBA PC"  toshiba
+do_command pick sender      mn128-soho    mn128
 
-do_command pick subject    PRESS-writers freeb
+do_command pick subject     PRESS-writers freeb
 
-do_command pick errors-to  types         types
-do_command pick sender     logic-ml      logic
-do_command pick reply-to   asian-logic   asian
-do_command pick sender     kisoron-ml    kisoron
+do_command pick errors-to   types         types
+do_command pick sender      logic-ml      logic
+do_command pick reply-to    asian-logic   asian
+do_command pick sender      kisoron-ml    kisoron
 do_command pick delivered-to slacs       slacs
-do_command pick x-ml-name  ipsj-info     ipsj
-do_command pick x-ml-name  sig-dsm-memb  dsm
-do_command pick x-sender   ieice.org     ieice
-do_command pick sender     owner-qed@    qed
-do_command pick sender     caml-list     caml
-do_command pick sender     coq-club      coq
-do_command pick sender     mizar-forum   mizar
-do_command pick sender     rsnt          metrorsnt
-do_command pick sender     owner-tnt     metrotnt
-do_command pick x-ml-name  semiken       metrosemiken
-do_command pick sender     owner-ug      metroug
+do_command pick x-ml-name   ipsj-info     ipsj
+do_command pick x-ml-name   sig-dsm-memb  dsm
+do_command pick x-sender    ieice.org     ieice
+do_command pick sender      owner-qed@    qed
+do_command pick sender      caml-list     caml
+do_command pick sender      coq-club      coq
+do_command pick sender      mizar-forum   mizar
+do_command pick sender      rsnt          metrorsnt
+do_command pick sender      owner-tnt     metrotnt
+do_command pick x-ml-name   semiken       metrosemiken
+do_command pick sender      owner-ug      metroug
 
-do_command pick x-ml-name  comp-alge     compalge
+do_command pick x-ml-name   comp-alge     compalge
 
-do_command pick from       "SDC Program" sunsdc
-do_command search "solaris develop"      sunsoldc
-do_command pick reply-to   nsug-kanji@   nsugkanji
-do_command pick list-id    nsug-cd       nsugcd
-do_command pick x-ml-name  talk          nsugtalk
-do_command pick reply-to   office@nsug   nsug
-do_command pick list-id    nsug-camp     nsugcamp
+do_command pick from        "SDC Program" sunsdc
+do_command search "solaris  develop"      sunsoldc
+do_command pick reply-to    nsug-kanji@   nsugkanji
+do_command pick list-id     nsug-cd       nsugcd
+do_command pick x-ml-name   talk          nsugtalk
+do_command pick reply-to    office@nsug   nsug
+do_command pick list-id     nsug-camp     nsugcamp
+do_command pick x-ml-name   java          nsugjava
+do_command pick reply-to    linux@nsug    nsuglinux
 
-do_command pick subject    openbsd-ja    ja
-do_command pick x-ml-name  wakakusa      waka
-do_command pick sender     ports@openbsd ports
+do_command pick subject     openbsd-ja    ja
+do_command pick x-ml-name   wakakusa      waka
+do_command pick sender      ports@openbsd ports
 
-do_command pick x-ml-name  chibug        chibug
-do_command pick x-ml-name  chibug-staff  chista
-do_command pick sender     owner-st-d3   std3
+do_command pick x-ml-name   chibug        chibug
+do_command pick x-ml-name   chibug-staff  chista
+do_command pick sender      owner-st-d3   std3
 
-do_command pick sender     domain-talk   domain
-do_command pick sender     ip-users      ipusers
-do_command pick sender     icann-d       icannd
+do_command pick sender      domain-talk   domain
+do_command pick sender      ip-users      ipusers
+do_command pick sender      icann-d       icannd
 
-do_command pick x-ml-name  janog         janog
-do_command search jepg-ip.ad.jp          jepg
-do_command pick sender     owner-ix-talk ix
-do_command search mbone-jp               mbonejp
-do_command pick sender     mboned        mboned
-do_command pick x-sequence ipmulti       ipmulti
+do_command pick x-ml-name   janog         janog
+do_command search           jepg-ip.ad.jp jepg
+do_command pick sender      owner-ix-talk ix
+do_command search           mbone-jp      mbonejp
+do_command pick sender      mboned        mboned
+do_command pick x-sequence  ipmulti       ipmulti
 
-do_command pick sender     owner-psst    psst
-do_command pick sender     lsh-bugs      lsh
-do_command pick sender     pki-talk-     pki
-do_command pick sender     owner-inch    inch
+do_command pick sender      owner-psst    psst
+do_command pick sender      lsh-bugs      lsh
+do_command pick sender      pki-talk-     pki
+do_command pick sender      owner-inch    inch
+do_command pick x-beenthere snort         snortjp
 
-do_command pick x-ml-name  mgp           mgp
-do_command search nmh-workers            nmh
-## do_command pick x-loop     nmh           nmh
-## do_command pick received     nmh-           nmh
+do_command pick x-ml-name   mgp           mgp
+do_command search           nmh-workers   nmh
+## do_command pick x-loop      nmh           nmh
+## do_command pick received    nmh-          nmh
+do_command pick return-path @amazon.co.jp amazon
+do_command pick return-path crisp-bounces crisp
 
-do_command pick x-ml-name  sv            sv
+do_command pick x-ml-name   sv            sv
 
 echo "\n-- $0 done. \c"
 date

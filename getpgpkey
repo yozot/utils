@@ -1,9 +1,10 @@
 #!/bin/sh
-## $Id: getpgpkey,v 1.2 2003/03/20 04:03:35 yozo Exp $
+## $Id: getpgpkey,v 1.3 2004/12/05 16:29:33 yozo Exp $
 
 PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
 
-FETCHCMD="w3m -dump"
+## FETCHCMD="w3m -dump"
+FETCHCMD="wget --output-document=-"
 KEYSERVER=pgp.nic.ad.jp
 PORT=11371
 SERVERPATH="/pks/lookup?op=get&search="
