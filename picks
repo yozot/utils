@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.2 2003/02/23 03:18:31 yozo Exp $
+## $Id: picks,v 1.3 2003/03/19 12:40:52 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -113,6 +113,7 @@ do_command pick sender     mboned        mboned
 do_command pick sender     owner-psst    psst
 do_command pick sender     lsh-bugs      lsh
 do_command pick sender     pki-talk-     pki
+do_command pick sender     owner-inch    inch
 
 do_command pick x-ml-name  mgp           mgp
 do_command search nmh-workers            nmh
