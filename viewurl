@@ -1,0 +1,44 @@
+#!/bin/sh
+## $Id: viewurl,v 1.1 2004/12/05 16:31:15 yozo Exp $
+## Id: viewurl,v 1.1 2003/09/15 21:56:45 yozo Exp $
+## intended to hook in .mh_profile, for messages of type text/html.
+## mhshow-show-text/html: %pviewurl '%F'
+
+progname=`basename $0`
+
+BROWSER=
+istmp="no"
+
+if [ -z "${TMPDIR}" ]; then
+  TMPDIR=${HOME}/Mail
+fi
+
+usage(){
+  echo "usage: $0 file|URL" 1>&2
+}
+
+if [ $# -lt 1 ]; then
+  echo "$0: single argument expected..." 1>&2
+  echo "$0: $*" 1>&2
+  usage
+  exit 10
+elif [ $# -gt 1 ]; then
+  echo "$0: too many arguments..." 1>&2
+  echo "$0: $*" 1>&2
+  usage
+  exit 20
+fi
+
+if [ -f "$1" ]; then
+  tmpfile=`mktemp ${TMPDIR}/${progname}_XXXXXXXXXXXX`
+  cp -p $1 ${tmpfile}
+  ## BROWSER="mozilla-firebird -remote \"openfile(${tmpfile},new-window)\""
+  ## echo hoho: $BROWSER
+  firefox -remote "openfile(${tmpfile},new-window)"
+  read line?'done?'
+  rm ${tmpfile}
+else
+  ## BROWSER="mozilla-firebird -remote \"openurl($1,new-window)\""
+  ## ${BROWSER}
+  mozilla-firebird -remote "openurl($1,new-window)"
+fi
