@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: picks,v 1.2 2003/02/23 03:18:31 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -90,6 +90,7 @@ do_command pick reply-to   nsug-kanji@   nsugkanji
 do_command pick list-id    nsug-cd       nsugcd
 do_command pick x-ml-name  talk          nsugtalk
 do_command pick reply-to   office@nsug   nsug
+do_command pick list-id    nsug-camp     nsugcamp
 
 do_command pick subject    openbsd-ja    ja
 do_command pick x-ml-name  wakakusa      waka

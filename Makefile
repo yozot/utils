@@ -1,4 +1,4 @@
-## $Id: Makefile,v 1.1 2002/12/05 17:34:57 yozo Exp $
+## $Id: Makefile,v 1.2 2003/02/23 03:18:31 yozo Exp $
 
 FILES= rotlogs clean cmp-and-remove do-cvs \
        make-fakedist make-kernel make-userland make-xf4 \
@@ -6,6 +6,7 @@ FILES= rotlogs clean cmp-and-remove do-cvs \
 
 INSTALLDIR=${HOME}/bin
 INSTALL=/usr/bin/install
+DISTDIR=/tmp
 
 default:
 	@echo "files: $(FILES)"
@@ -20,3 +21,7 @@ install:
 	  echo "installing $$i into $(INSTALLDIR)..." ; \
 	  $(INSTALL) -b -m 550 $$i $(INSTALLDIR) ; \
 	done
+
+dist:
+	echo "creating a distribution tarball..."
+	tar czvf $(DISTDIR)/utils.tar.gz $(FILES) Makefile
