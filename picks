@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.6 2003/07/10 16:53:57 yozo Exp $
+## $Id: picks,v 1.7 2003/07/10 17:08:36 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -63,6 +63,7 @@ do_command pick reply-to   @jpcert       jpcert
 do_command pick list-id    bugtraq-jp    traqjp
 
 do_command pick x-ml-name  customer      vaio
+do_command pick return-path stylemail@jp.sonystyle.com sonystyle
 do_command pick subject    "TOSHIBA PC"  toshiba
 do_command pick sender     mn128-soho    mn128
 
