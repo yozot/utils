@@ -1,0 +1,25 @@
+#!/bin/sh
+## $Id: cmp-and-remove,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## for manual updating operation -- yozo.  Thu Apr 26 16:03:19 JST 2001
+
+## echo $*
+## for i in $* ; do
+##   echo "$0: $i"
+##   cd $i ; ls -al
+## done
+
+process-one-directory(){
+    for i in $1/* ; do
+      ## echo "comparing /$1/$i and $1/$i ..."
+      cmp /$i $i && rm $i && echo $i removed.
+    done
+}
+
+for j in $* ; do
+  if [ -d $j ]; then
+    echo "$0: processing $j"
+    process-one-directory $j
+  ## else
+  ##   echo "$0: ignore $j ; it's not a directory."
+  fi
+done

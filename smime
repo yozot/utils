@@ -1,0 +1,29 @@
+#!/bin/sh
+## $Id: smime,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## smime processing
+## TODO: smime message composition
+
+PATH=/usr/bin
+
+OPENSSL=/usr/sbin/openssl
+progname=`basename $0`
+
+usage(){
+  echo "usage: ${progname} < message" 1>&2
+  echo "${progname} verifies a S/MIME message using openssl." 1>&2
+}
+
+if [ $# -eq 1 ]; then
+  case "$1" in
+    -h*)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "unknown option ($1)" 1>&2
+      exit 10
+      ;;
+  esac
+fi
+
+${OPENSSL} smime -verify -noverify > /dev/null

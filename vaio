@@ -1,0 +1,9 @@
+#!/bin/sh
+## $Id: vaio,v 1.1 2002/12/05 17:04:15 yozo Exp $
+
+PATH=/bin:/usr/bin:/usr/local/bin
+
+name=`hostname`
+echo "starting kterm..."
+kterm -bg grey10 -fg grey60 -cr grey70 -vb -sb -name ${name} -fl "*--16-*" $* &
+

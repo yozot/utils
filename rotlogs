@@ -1,0 +1,60 @@
+#!/bin/sh
+## $Id: rotlogs,v 1.1 2002/12/05 17:04:15 yozo Exp $
+##
+## log-make-fakedist added -- yozo.  Fri Dec 21 06:46:00 JST 2001
+##
+## log-make-xf4 added, other unused filenames deleted
+##  -- yozo.  Tue May 29 10:55:54 JST 2001
+##
+## LOGDIR moved from /var/tmp/ to /usr/local/tmp/.
+## -- yozo.  Wed Sep 20 17:27:26 JST 2000
+##
+## newsyslog variant. intended to be executed manually.
+## -- yozo.  Mon Jul  3 09:27:05 JST 2000
+
+LOGDIR=/usr/local/tmp
+FILES='log-cvs log-make-kernel log-make-userland log-make-fakedist \
+       log-make-x11 log-make-xf4 log-make-fakedist'
+
+move() { ## $1 $2
+  for f in ${FILES}
+  do
+    if [ -f $f.$1 ]; then
+      echo "$0: $f.$1 ==> $f.$2"
+      mv $f.$1 $f.$2
+    fi
+  done
+}
+
+############################################################
+
+cd ${LOGDIR}
+
+
+move 15 16
+move 14 15
+move 13 14
+move 12 13
+move 11 12
+move 10 11
+move 9 10
+move 8 9
+move 7 8
+move 6 7
+move 5 6
+move 4 5
+move 3 4
+move 2 3
+move 1 2
+move 0 1
+
+## treating empty extension files
+for f in ${FILES}
+do
+  if [ -f $f ]; then
+    echo "$0: $f ==> $f.0"
+    mv $f $f.0
+  fi
+done
+
+## end_of_file ##

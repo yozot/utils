@@ -1,0 +1,171 @@
+#!/bin/sh
+## $Id: pu,v 1.1 2002/12/05 17:04:15 yozo Exp $
+
+LS_COMMAND=ls
+PKG_ADD=/usr/sbin/pkg_add
+PKG_DELETE=/usr/sbin/pkg_delete
+PKG_INFO=/usr/sbin/pkg_info
+PKGDIR=/usr/ports/packages/`uname -m`/All
+
+EXTENSION=".tgz"
+DEBUG=
+VERBOSE=
+progname=$0
+requiredpackages="" ## set inside get_requiredpackages()
+OUTPUT_PREFIX=" "
+SHOWPACKAGENAME=
+
+usage(){
+  echo "usage: ${progname} [-help] [-debug] [-prefix string] [-showpackage] [-verbose] pkgname" 1>&2
+}
+
+get_requiredpackages(){
+  pkgname="$1"
+  requiredpackages=`${PKG_INFO} -R ${pkgname} | \
+                  sed -e '1,/^Required by:/d' -e '/^$/d'`
+}
+
+## NOT USED ##
+showpkgtree(){
+  prefix="${PREFIX}"
+  pkgname="${PACKAGENAME}"
+  requiredpkglist="${REQUIREDPACKAGES}"
+
+  echo "showpkgtree: prefix=(${prefix})"
+  echo "showpkgtree: pkgname=${pkgname}"
+  echo "showpkgtree: rpkglist=${requiredpkglist}"
+
+  if [ -z "${requiredpkglist}" ]; then
+    echo "${prefix}${pkgname}"
+  else
+    for i in "${requiredpkglist}" ; do
+      get_requiredpackages ${i}
+      showpkgtree "${prefix}o " ${i} "${requiredpackages}"
+    done
+  fi
+}
+
+#### option analysis ####
+
+while [ $# -gt 0 ]; do
+  ## echo "arg: $1" 1>&2
+  case "$1" in
+    -d*)
+      DEBUG="-d"
+      shift
+      ;;
+    -h*)
+      usage
+      exit 1
+      ;;
+    -prefix*)
+      shift
+      OUTPUT_PREFIX="$1"
+      shift
+      ;;
+    -show*)
+      SHOWPACKAGENAME="-showpackage"
+      shift
+      ;;
+    -verb*)
+      VERBOSE="-v"
+      shift
+      ;;
+    --)
+      if [ -n "${DEBUG}" ]; then
+        echo "option ended." 1>&2
+      fi
+      shift
+      break
+      ;;
+    -*)
+      echo "unknown option ($1)" 1>&2
+      usage
+      exit 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [ ! $# -eq 1 ]; then
+  echo "argument should be only ONE." 1>&2
+  usage
+  exit 3
+fi
+
+if [ -n ${OUTPUT_PREFIX} ]; then
+  OUTPUT_PREFIX="${OUTPUT_PREFIX}"
+fi
+
+if [ -n "${DEBUG}" ]; then
+  echo "DEBUG on." 1>&2
+  echo "${progname}: argument ($1)." 1>&2
+  echo "OUTPUT_PREFIX: ${OUTPUT_PREFIX}" 1>&2
+  if [ -n "$VERBOSE}" ]; then
+    echo "VERBOSE on." 1>&2
+  else
+    echo "VERBOSE off." 1>&2
+  fi
+fi
+
+#### check installed package name and new package file ####
+
+packages=`${PKG_INFO} -e "$1"`
+if [ ! $? -eq 0 ]; then
+  echo "${progname}: $1 NOT found."
+  exit 10
+fi
+
+if [ -n "${DEBUG}" ]; then
+  echo "packages: ${packages}" 1>&2
+fi
+
+num=`echo "${packages}" | wc -l`
+
+if [ ! ${num} -eq 1 ]; then
+  echo "${progname}: too many packages found." 1>&2
+  echo "${packages}" 1>&2
+  exit 20
+fi
+
+packagename=${packages}
+
+if [ -n "${DEBUG}" ]; then
+  echo "${progname}: installed package ${packagename}" 1>&2
+fi
+
+if [ ! -f ${PKGDIR}/${packagename}${EXTENSION} ]; then
+  echo "${progname}: new package file NOT found." 1>&2
+  exit 30
+fi
+
+if [ -n "${DEBUG}" ]; then
+  echo -n "${progname}: new package file: "
+  ls ${PKGDIR}/${packagename}${EXTENSION}
+fi
+
+#### now check how many packages require this package ####
+
+get_requiredpackages ${packagename}
+
+if [ -z "${requiredpackages}" ]; then
+  if [ -n "${VERBOSE}" ]; then
+    echo "${progname}: NO packages depend on ${packagename}."
+  fi
+else
+  if [ -n "${SHOWPACKAGENAME}" ]; then
+    echo "${OUTPUT_PREFIX}${packagename}:"
+  fi
+  for i in ${requiredpackages} ; do
+    echo "${OUTPUT_PREFIX}  <-- ${i}"
+    ${progname} ${DEBUG} -prefix "${OUTPUT_PREFIX}${OUTPUT_PREFIX} " ${i}
+  done
+
+##   ## should be merged to one loop (to be depth-first).
+##   for i in ${requiredpackages} ; do
+##     ${progname} ${DEBUG} -prefix "${OUTPUT_PREFIX}${OUTPUT_PREFIX} " ${i}
+##   done
+
+fi

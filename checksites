@@ -1,0 +1,50 @@
+#!/bin/sh
+## $Id: checksites,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## check and see if the top pages of the sites have changed
+
+progname=`basename $0`
+
+PORTSDIR=/usr/ports/
+LOGDIR=${HOME}/tmp/${progname}/
+PORTLIST="archivers/lha editors/emacs21-leim x11/xvkbd math/coq"
+LOGFILE=${LOGDIR}log
+
+if [ ! -d ${LOGDIR} ]; then
+  echo "${progname}: logdir ${LOGDIR} does not exist." 1>&2
+  exit 10
+fi
+
+echo -n "${progname}: " >> ${LOGFILE}
+date                    >> ${LOGFILE}
+
+for i in ${PORTLIST} ; do
+  homepage=`egrep "^HOMEPAGE" ${PORTSDIR}${i}/Makefile`
+  if [ $? -eq 0 ]; then
+    homepage=`echo ${homepage} | awk '{print $NF }'`
+    portlog=`echo ${homepage} | egrep '/$'`
+    if [ $? -eq 0 ]; then
+      portlog=`basename ${portlog}`-index.html
+      homepage=${homepage}index.html
+    else
+      portlog=`basename ${i}`-`basename ${homepage}`
+    fi
+    echo "${progname}: checking ${homepage}" >> ${LOGFILE}
+    if [ -f ${LOGDIR}${portlog} ]; then
+      mv ${LOGDIR}${portlog} ${LOGDIR}${portlog}-old
+      echo "${progname}: OLDFILE for ${i} renamed" >> ${LOGFILE}
+      wget --append-output=${LOGFILE} --output-document=${LOGDIR}${portlog} --timestamping ${homepage}
+      diff -u ${LOGDIR}${portlog}{-old,} >> ${LOGFILE}
+    else
+      echo "${progname}: NEWFILE ${LOGDIR}${portlog}" >> ${LOGFILE}
+      wget --append-output=${LOGFILE} --output-document=${LOGDIR}${portlog} --timestamping ${homepage}
+    fi
+  else
+    echo "${progname}: ${i}/Makefile does not contain HOMEPAGE line" >> ${LOGFILE}
+  fi
+done
+exit 0
+
+
+HOMEPAGE=       http://www2m.biglobe.ne.jp/~dolphin/lha/lha.htm
+HOMEPAGE=		http://member.nifty.ne.jp/tsato/xvkbd/
+HOMEPAGE=		http://coq.inria.fr/

@@ -1,0 +1,102 @@
+#!/bin/sh
+## $Id: make-userland,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## make-userland script
+## if you wanna record the output, type
+##     (make-userland >& logfile) &
+## and see logfile.
+## -- yozo.  Thu Mar 22 18:18:27 JST 2001
+##
+## starting messages beautified -- yozo.  Thu Apr 26 16:23:52 JST 2001
+## beautified a little more -- yozo.  Thu May 10 11:33:33 JST 2001
+## kerberosV added -- yozo.  Tue Aug 28 18:47:00 JST 2001
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+LOGDIR=/usr/local/tmp
+SRCDIR=/usr/src
+OBJDIR=/usr/obj
+EXISTS_OBJDIR="YES" ## assumes obj dir by default
+
+echo -n "$0: "
+date
+echo -n "$0: "
+uname -a
+echo
+
+ls -alt ${LOGDIR}
+df -k
+echo
+
+if [ -d ${SRCDIR} ] ; then
+  echo "$0: ${SRCDIR} exists."
+else
+  echo "$0: ${SRCDIR} does not exist. check it."
+  exit 10
+fi
+
+#### move to obj directory if exists.
+if [ -d ${OBJDIR} ] ; then
+  echo "$0: ${OBJDIR} exists."
+  cd ${OBJDIR}
+  echo -n "$0: current dir is "
+  pwd
+  ls -aFl
+  echo "$0: disk usage(du -sk *)"
+  du -sk *
+  echo
+  if [ -d OLD ] ; then
+    echo "$0: ${OBJDIR}/OLD exists. remove this before executing me."
+    exit 20
+  fi
+  echo "$0: start cleaning now..."
+  mkdir OLD
+  mv bin distrib games gnu kerberosIV kerberosV lib libexec regress sbin share sys usr.bin usr.sbin OLD
+  echo "$0: removing OLD directory in background."
+  rm -rf OLD &
+  ls -aFl
+else
+  echo "$0: ${OBJDIR} does not exist. in-place compilation progressing..."
+  EXISTS_OBJDIR="NO"
+fi
+echo
+
+#### move to src directory
+cd ${SRCDIR}
+echo -n "$0: current dir is "
+pwd
+ls -aFl
+echo -n "$0: disk usage(du -sk .) -- "
+du -sk .
+echo
+echo "$0: head Makefile ======"
+head Makefile
+echo "$0: head Makefile ======"
+echo
+
+if [  X${EXISTS_OBJDIR} = XYES ]; then
+  echo -n "$0: \"make obj\" and \"make build\" start..."
+  date
+  make obj && make build
+  date
+elif [  X${EXISTS_OBJDIR} = XNO ]; then
+  echo -n "$0: \"make build\" start..."
+  date
+  make build
+  date
+fi
+
+echo -n "$0: current dir is "
+pwd
+echo -n "$0: disk usage(du -sk .) -- "
+du -sk .
+df -k
+echo
+
+echo "$0: userland compilation finished."
+echo "$0: upgrade files in /etc, /dev, /var etc. manually."
+echo "$0: for this final task, do"
+echo "$0:     \"cd /usr/src/etc && make DESTDIR=/tmp/dist distribution-etc-root-var\""
+echo "$0: to install new files under /tmp/dist/, then compare them with /etc/, /var/ etc."
+echo "$0: execute /dev/MAKEDEV to make new device files if necessary."
+
+## end_of_file.

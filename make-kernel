@@ -1,0 +1,105 @@
+#!/bin/sh
+## $Id: make-kernel,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## make-kernel script
+## if you wanna record the output, type
+##     (make-kernel >& logfile) &
+## and see logfile.
+## -- yozo.  Wed Mar 21 17:34:35 JST 2001
+##
+## take one argument for the configuration file name.
+##    (make-kernel conf >& logfile) &
+## -- yozo.  Thu Mar 29 18:57:51 JST 2001
+##
+## MACH used to specify machine hardware
+## -- yozo.  Thu Apr  5 14:47:12 JST 2001
+##
+## date command added in the first part -- yozo.  Tue Apr 10 14:28:32 JST 2001
+## starting messages beautified -- yozo.  Thu Apr 26 16:28:09 JST 2001
+
+PATH=/usr/bin:/bin
+
+if [ $# != 1 ] ; then
+  echo "specify configuration file name (e.g., GENERIC)." ;
+  echo "\tusage: $0 configfile"
+  exit 10
+fi
+KERNELCONF=$1
+
+MACH=`uname -m`
+
+LOGDIR=/usr/local/tmp
+COMPILEDIR=/usr/src/sys/arch/${MACH}/compile/${KERNELCONF}
+CONFDIR=/usr/src/sys/arch/${MACH}/conf
+
+if [ ! -f ${CONFDIR}/${KERNELCONF} ]; then
+  echo "${CONFDIR}/${KERNELCONF} not found. abort now..."
+  exit 20
+fi
+
+echo -n "$0: "
+date
+echo -n "$0: "
+uname -a
+echo
+
+ls -alt ${LOGDIR}
+df -k
+echo
+
+if [ -d ${CONFDIR} ] ; then
+  echo "$0: ${CONFDIR} exists."
+else
+  echo "$0: ${CONFDIR} does not exist. check it."
+  exit 10
+fi
+
+if [ -d ${COMPILEDIR} ] ; then
+  echo "$0: ${COMPILEDIR} exists."
+  #### move to compile directory
+  cd ${COMPILEDIR}
+  echo -n "$0: current dir is "
+  pwd
+  echo -n "$0: disk usage(du -sk .) -- "
+  du -sk .
+  echo "$0: starting \"make clean\" now..."
+  date
+  make clean
+  date
+  echo -n "$0: disk usage(du -sk .) -- "
+  du -sk .
+  ls -aCFt
+else
+  echo "$0: ${COMPILEDIR} does not exist."
+fi
+
+#### move to config directory
+cd ${CONFDIR}
+echo -n "$0: current dir is "
+pwd
+ls -alt
+echo "$0: head ${KERNELCONF} ======"
+head ${KERNELCONF}
+echo "$0: head ${KERNELCONF} ======"
+
+/usr/sbin/config ${KERNELCONF}
+
+#### back to compile directory
+cd ${COMPILEDIR}
+echo -n "$0: current dir is "
+pwd
+echo -n "$0: disk usage(du -sk .) -- "
+du -sk .
+ls -aCFt
+
+echo -n "$0: \"make depend\" and \"make\" start..."
+date
+make depend && make
+date
+
+du -sk .
+df -k
+
+echo "$0: compilation finished."
+echo "$0: please do adjust timezone variable and install bsd as /bsd."
+
+## end_of_file.

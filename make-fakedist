@@ -1,0 +1,116 @@
+#!/bin/sh
+## $Id: make-fakedist,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## make-fakedist: do fake-distribution and remove not-changed files
+## -- yozo.  Sat Dec  1 21:38:45 JST 2001
+##
+## the last message added -- yozo.  Sun Dec 30 08:21:41 JST 2001
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+## CMPRM=/home/yozo/bin/cmp-and-remove
+
+SRCETC=/usr/src/etc
+DESTDIR=/tmp/dist
+RMFILES="sys etc/{mail/aliases.db,motd,myname,localtime,rmt,pwd.db,spwd.db}"
+
+##
+cmp-and-rm-dir(){
+    for i in $1/* ; do
+      ## echo "comparing /$1/$i and $1/$i ..."
+      cmp /$i $i && rm $i && echo "$i removed."
+    done
+}
+cmp-and-rm-dirs(){
+  for j in $* ; do
+    if [ -d $j ]; then
+      echo "$0: processing $j"
+      cmp-and-rm-dir $j
+    ## else
+    ##   echo "$0: ignore $j ; it's not a directory."
+    fi
+  done
+}
+
+##
+
+echo -n "$0: "
+date
+echo -n "$0: "
+uname -a
+echo
+
+if [ -d ${DESTDIR} -o -f ${DESTDIR} ]; then
+  echo "$0: ${DESTDIR} already exists."
+  echo "$0: clean before executing me!"
+  exit 1
+else
+  echo "$0: creating ${DESTDIR} and"
+  echo "$0: \"make DESTDIR=... distribution-etc-root-var\" at /usr/src/etc/."
+  echo ""
+fi
+
+cd ${SRCETC}
+cwd=`pwd`
+echo "$0: the current directory is ${cwd}"
+
+echo "$0: doing \"make DESTIDR=${DESTDIR} distribution-etc-root-var\"..."
+make DESTDIR=${DESTDIR} distribution-etc-root-var
+
+cd ${DESTDIR}
+cwd=`pwd`
+echo "$0: the current directory is ${cwd}"
+
+echo "removing ${RMFILES}"
+rm -f ${RMFILES}
+
+echo "$0: removing empty files..."
+find . -type f -empty -print -exec rm {} \;
+
+echo "$0: removing empty directories..."
+for i in 1 2 3 4 5 6 7 8 ; do
+  echo "$0: removing empty directories ($i)..."
+  find . -type d -empty -exec rmdir {} \;
+done
+
+for f in .cshrc .profile ; do
+  cmp /$f ./$f && rm ./$f && echo "$f removed."
+done
+
+if [ -d root ]; then
+  for f in `ls root` ; do
+    cmp /root/$f ./root/$f && rm ./root/$f && echo "root/$f removed."
+  done
+fi
+
+## removing root directory
+find . -type d -empty -exec rmdir {} \;
+
+for f in MAKEDEV MAKEDEV.local ; do
+  cmp /dev/$f ./dev/$f && rm ./dev/$f
+done
+
+## removing dev directory
+find . -type d -empty -exec rmdir {} \;
+
+cmp-and-rm-dirs var/*/*/*/*/* var/*/*/*/* var/*/*/* var/*/* var/* var etc/* etc
+
+if [ -d etc/mail ]; then
+  for f in `ls etc/mail` ; do
+    cmp /etc/mail/$f ./etc/mail/$f && rm ./etc/mail/$f && echo "etc/mail/$f removed."
+  done
+fi
+
+if [ -d etc/skel ]; then
+  for f in `ls etc/skel` ; do
+    cmp /etc/skel/$f ./etc/skel/$f && rm ./etc/skel/$f && echo "etc/skel/$f removed."
+  done
+fi
+
+echo "$0: removing empty directories..."
+for i in 1 2 3 4 5 6 7 8 ; do
+  echo "$0: removing empty directories ($i)..."
+  find . -type d -empty -exec rmdir {} \;
+done
+
+echo "$0: check remaining files in ${DESTDIR}."
+date
+exit 0

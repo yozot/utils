@@ -1,0 +1,66 @@
+#!/bin/sh
+## $Id: do-cvs,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## do-cvs
+## -- yozo.  Thu Mar 22 12:02:49 JST 2001
+## starting messages fixed -- yozo.  Thu May 10 11:29:53 JST 2001
+##
+## XF4 added -- yozo.  Wed May 23 12:36:52 JST 2001
+## X11 removed -- yozo@vaio707.  Sun Aug 19 01:37:42 JST 2001
+##
+## -cvsroot option added -- yozo.  Sun Jan 20 12:20:13 JST 2002
+## -tag option added -- yozo.  Sat Apr 20 13:42:57 JST 2002
+
+PATH=/usr/bin:/bin
+cvsroot=anoncvs@anoncvs.jp.openbsd.org:/cvs
+tag=
+
+echo -n "$0: started: "
+date
+echo -n "$0: "
+uname -a
+echo
+
+if [ $# -gt 0 ]; then
+  if [ $# -eq 2 ]; then
+    case "$1" in
+      -cvsroot)
+          cvsroot="$2"
+          echo "$0: using cvsroot $2"
+          shift
+          shift
+          ;;
+      -tag)
+          echo "$0: using tag $2"
+          tag="-r$2"
+          shift
+          shift
+          ;;
+      *)
+          echo "$0: -cvsroot options expected: $1 $2"
+          shift
+          shift
+          ;;
+    esac
+  else
+    echo "$0: unknown options ignored: $*"
+  fi
+fi
+
+ls -alt /usr/local/tmp
+
+export CVS_RSH=/usr/bin/ssh
+echo "$0: CVS_RSH is $CVS_RSH"
+cd /usr
+
+df -k
+echo
+echo -n "$0: current dir is "
+pwd
+echo "$0: starting cvs from ${cvsroot}..."
+date
+cvs -d ${cvsroot} -z9 update -PAd ${tag} src ports XF4 www
+date
+df -k
+echo "$0: cvs finished."
+
+## end_of_file.

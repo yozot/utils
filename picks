@@ -1,0 +1,126 @@
+#!/bin/sh
+## $Id: picks,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## picks -- do pick to define sequences
+PATH=/bin:/usr/bin:/usr/local/bin
+
+do_command (){
+  command=$1
+  if [ "${command}" = "pick" ]; then
+    # $2 -- header field
+    keyword=$3
+    seqname=$4
+    result=`pick "--${2}" "${keyword}" -seq "${seqname}" 2>&1 | \
+            sed 's/pick: no messages match specification//'`
+  elif [ "${command}" = "search" ]; then
+    keyword=$2
+    seqname=$3
+    result=`pick -search "${keyword}" -seq "${seqname}" 2>&1 | \
+           sed 's/pick: no messages match specification//'`
+  fi
+  if [ "X${result}" != "X" -o "${verbose}" = "on" ]; then
+    echo "${seqname}\t(${1}ing ${keyword}):\t\c"
+    echo "${result}"
+  fi
+}
+
+## do_pick (){
+##   # $1 -- header field
+##   # $2 -- keyword
+##   # $3 -- sequence name
+##   echo "$3\t(picking $2):\t\c"
+##   pick "--${1}" "$2" -seq "$3"
+## }
+
+## do_search (){
+##   # $1 -- keyword
+##   # $2 -- sequence name
+##   echo "$2\t(picking $1):\t\c"
+##   pick -search "$1" -seq "$2"
+## }
+
+########################################
+
+if [ $# -eq 1 ]; then
+  case "$1" in
+    -verb*)
+            verbose="on"
+            ;;
+    *)
+            echo "unknown option ignored: $1"
+            ;;
+  esac
+fi
+ 
+echo "$0 start -- \c"
+date
+echo "current folder: \c"
+folder
+echo
+
+do_command pick list-owner cert-advisory cert
+do_command pick sender     snmp-forum    certsnmp
+do_command pick reply-to   @jpcert       jpcert
+do_command pick list-id    bugtraq-jp    traqjp
+
+do_command pick x-ml-name  customer      vaio
+do_command pick sender     mn128-soho    mn128
+
+do_command pick subject    PRESS-writers freeb
+
+do_command pick errors-to  types         types
+do_command pick sender     logic-ml      logic
+do_command pick reply-to   asian-logic   asian
+do_command pick sender     kisoron-ml    kisoron
+do_command search slacs@kuis.kyoto-u     slacs
+do_command pick x-ml-name  ipsj-info     ipsj
+do_command pick x-ml-name  sig-dsm-memb  dsm
+do_command pick x-sender   ieice.org     ieice
+do_command pick sender     owner-qed@    qed
+do_command pick sender     caml-list     caml
+do_command pick sender     coq-club      coq
+do_command pick sender     mizar-forum   mizar
+do_command pick sender     rsnt          metrorsnt
+do_command pick sender     owner-tnt     metrotnt
+do_command pick x-ml-name  semiken       metrosemiken
+do_command pick sender     owner-ug      metroug
+
+do_command pick from       "SDC Program" sunsdc
+do_command search "solaris develop"      sunsoldc
+do_command pick reply-to   nsug-kanji@   nsugkanji
+do_command pick list-id    nsug-cd       nsugcd
+do_command pick x-ml-name  talk          nsugtalk
+do_command pick reply-to   office@nsug   nsug
+
+do_command pick subject    openbsd-ja    ja
+do_command pick x-ml-name  wakakusa      waka
+do_command pick sender     ports@openbsd ports
+
+do_command pick x-ml-name  chibug        chibug
+do_command pick x-ml-name  chibug-staff  chista
+do_command pick sender     owner-st-d3   std3
+
+do_command pick sender     domain-talk   domain
+do_command pick sender     ip-users      ipusers
+do_command pick sender     icann-d       icannd
+
+do_command pick x-ml-name  janog         janog
+do_command search jepg-ip.ad.jp          jepg
+do_command pick sender     owner-ix-talk ix
+do_command search mbone-jp               mbonejp
+do_command pick sender     mboned        mboned
+
+do_command pick sender     owner-psst    psst
+do_command pick sender     lsh-bugs      lsh
+do_command pick sender     pki-talk-     pki
+
+do_command pick x-ml-name  mgp           mgp
+do_command search nmh-workers            nmh
+## do_command pick x-loop     nmh           nmh
+## do_command pick received     nmh-           nmh
+
+do_command pick x-ml-name  sv            sv
+
+echo "\n-- $0 done. \c"
+date
+
+## end_of_file ##

@@ -1,0 +1,44 @@
+#!/bin/sh
+## $Id: base64,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## base64 encoder/decoder
+
+PATH=/bin/:/usr/bin
+OPENSSL=/usr/sbin/openssl
+
+usage(){
+  echo "usage: $0 -help|-e|-d [-in file]" 1>&2
+}
+
+if [ $# -le 0 ]; then
+  usage
+  exit 1
+elif [ $1 = "-help" ]; then
+  usage
+  exit 1
+else
+  case $1 in
+    -e|-d)
+      cmd=$1
+      shift
+      ;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+fi
+
+if [ $# -eq 0 ]; then
+  ${OPENSSL} base64 ${cmd}
+else
+  case $1 in
+    -in)
+      file=$2
+      ;;
+    *)
+      usage
+      exit 3
+      ;;
+  esac
+  ${OPENSSL} base64 ${cmd} -in ${file}
+fi

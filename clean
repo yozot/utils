@@ -1,0 +1,68 @@
+#!/bin/sh
+## $Id: clean,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## clean: remove useless files in dist directory
+## -- yozo.  Sat Nov 17 15:55:32 JST 2001
+
+PATH=/bin:/usr/bin
+CMPRM=/home/yozo/bin/cmp-and-remove
+
+DESTDIR=/tmp/dist
+RMFILES="sys etc/{mail/aliases.db,motd,myname,localtime,rmt,pwd.db,spwd.db}"
+
+cd ${DESTDIR}
+cwd=`pwd`
+echo "$0: current directory is ${cwd}"
+
+echo "removing ${RMFILES}"
+rm -f ${RMFILES}
+
+echo "$0: removing empty files..."
+find . -type f -empty -print -exec rm {} \;
+
+echo "$0: removing empty directories..."
+for i in 1 2 3 4 5 6 7 8 ; do
+  echo "$0: removing empty directories ($i)..."
+  find . -type d -empty -exec rmdir {} \;
+done
+
+for f in .cshrc .profile ; do
+  cmp /$f ./$f && rm ./$f
+done
+
+if [ -d root ]; then
+  for f in `ls root` ; do
+    cmp /root/$f ./root/$f && rm ./root/$f
+  done
+fi
+
+## removing root directory
+find . -type d -empty -exec rmdir {} \;
+
+for f in MAKEDEV MAKEDEV.local ; do
+  cmp /dev/$f ./dev/$f && rm ./dev/$f
+done
+
+## removing dev directory
+find . -type d -empty -exec rmdir {} \;
+
+${CMPRM} var/*/*/*/*/* var/*/*/*/* var/*/*/* var/*/* var/* var etc/* etc
+
+if [ -d etc/mail ]; then
+  for f in `ls etc/mail` ; do
+    echo "cmp /etc/mail/$f ./etc/mail/$f && rm ./etc/mail/$f"
+  done
+fi
+
+if [ -d etc/skel ]; then
+  for f in `ls etc/skel` ; do
+    cmp /etc/skel/$f ./etc/skel/$f && rm ./etc/skel/$f
+  done
+fi
+
+echo "$0: removing empty directories..."
+for i in 1 2 3 4 5 6 7 8 ; do
+  echo "$0: removing empty directories ($i)..."
+  find . -type d -empty -exec rmdir {} \;
+done
+
+exit 0
