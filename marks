@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: marks,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: marks,v 1.2 2005/12/05 20:14:24 yozo Exp $
 ## list sequences with the number of messages
 
 PATH=/usr/bin:/bin:/usr/local/bin
@@ -22,7 +22,6 @@ mark -list | \
   while read line ; do
     seqname=`echo ${line} | awk '{print $1;}' | sed 's/:$//'`
     count=0
-    echo -n "${seqname} == "
     for i in `echo ${line} | sed "s/${seqname}://"` ; do
       if isrange ${i}
       then
@@ -32,6 +31,6 @@ mark -list | \
         count=`expr ${count} + 1`
       fi
     done
-    echo "${count}"
+    printf "%4d\t%s\n" ${count} ${seqname}
   done
 )
