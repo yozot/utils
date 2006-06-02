@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.12 2004/12/05 16:37:28 yozo Exp $
+## $Id: picks,v 1.13 2006/06/02 15:19:51 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -93,7 +93,7 @@ do_command pick x-ml-name   comp-alge     compalge
 
 do_command pick from        "SDC Program" sunsdc
 do_command search "solaris  develop"      sunsoldc
-do_command pick reply-to    nsug-kanji@   nsugkanji
+do_command pick x-ml-name   nsug-kanji   nsugkanji
 do_command pick list-id     nsug-cd       nsugcd
 do_command pick x-ml-name   talk          nsugtalk
 do_command pick reply-to    office@nsug   nsug
