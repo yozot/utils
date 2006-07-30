@@ -1,0 +1,21 @@
+#!/bin/sh
+## $Id: viewtext,v 1.1 2006/07/30 15:50:47 yozo Exp $
+## usage: env MMM_CHARSET=charset $0 textfile
+## configure your .mh_profile as
+##   mhshow-show-text/plain: showtext '%F'
+##   mhshow-charset-utf-8: env MMM_CHARSET=utf-8 %s
+
+PAGER=less
+
+case "${MMM_CHARSET}" in
+  iso-2022-jp*|iso-8859-*|"")
+    "${PAGER}" "$1"
+    ;;
+  utf-8)
+    iconv -f utf-8 -t iso-2022-jp-2 < "$1" | "${PAGER}"
+    ;;
+  *)
+    echo "illegal MMM_CHARSET: ${MMM_CHARSET}"  1>&2
+    exit 10
+    ;;
+esac
