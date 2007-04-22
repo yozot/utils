@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: do-cvs,v 1.1 2002/12/05 17:04:16 yozo Exp $
+## $Id: do-cvs,v 1.2 2007/04/22 13:51:33 yozo Exp $
 ## do-cvs
 ## -- yozo.  Thu Mar 22 12:02:49 JST 2001
 ## starting messages fixed -- yozo.  Thu May 10 11:29:53 JST 2001
@@ -9,6 +9,7 @@
 ##
 ## -cvsroot option added -- yozo.  Sun Jan 20 12:20:13 JST 2002
 ## -tag option added -- yozo.  Sat Apr 20 13:42:57 JST 2002
+## module xenocara added -- yozo.  Sun Apr 22 22:50:37 JST 2007
 
 PATH=/usr/bin:/bin
 cvsroot=anoncvs@anoncvs.jp.openbsd.org:/cvs
@@ -58,7 +59,7 @@ echo -n "$0: current dir is "
 pwd
 echo "$0: starting cvs from ${cvsroot}..."
 date
-cvs -d ${cvsroot} -z9 update -PAd ${tag} src ports XF4 www
+cvs -d ${cvsroot} -z9 update -PAd ${tag} src ports XF4 xenocara www
 date
 df -k
 echo "$0: cvs finished."
