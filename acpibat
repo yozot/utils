@@ -1,6 +1,7 @@
 #!/bin/sh
+## $Id: acpibat,v 1.2 2007/04/25 00:47:32 yozo Exp $
 
-echo "$0"
+## echo "$0"
 
 SYSCTL="/sbin/sysctl -n"
 
@@ -10,11 +11,12 @@ charging=`${SYSCTL} hw.sensors.acpibat0.raw0`
 powersupply=`${SYSCTL} hw.sensors.acpiac0.indicator0`
 temperature=`${SYSCTL} hw.sensors.acpitz0.temp0`
 
-echo "lastfull: ${lastfull}"
-echo "remaining: ${remaining}"
-expr \( "${remaining}" \* 100 \) / "${lastfull}"
-echo "charging: ${charging}"
-echo "powersupply: ${powersupply}"
+echo -n "battery: ${remaining} / "
+echo -n "${lastfull} ("
+bc -e "${remaining} * 100 / ${lastfull}" -e quit  | tr -d '\n'
+echo "% remaining)"
+echo -n "charging: ${charging} | "
+echo -n "powersupply: ${powersupply} | "
 echo "temperature: ${temperature}"
 
 
