@@ -1,0 +1,31 @@
+#!/bin/sh
+
+echo "$0"
+
+SYSCTL="/sbin/sysctl -n"
+
+lastfull=`${SYSCTL} hw.sensors.acpibat0.watthour0 | sed 's/[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
+remaining=`${SYSCTL} hw.sensors.acpibat0.watthour3 | sed 's/[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
+charging=`${SYSCTL} hw.sensors.acpibat0.raw0`
+powersupply=`${SYSCTL} hw.sensors.acpiac0.indicator0`
+temperature=`${SYSCTL} hw.sensors.acpitz0.temp0`
+
+echo "lastfull: ${lastfull}"
+echo "remaining: ${remaining}"
+expr \( "${remaining}" \* 100 \) / "${lastfull}"
+echo "charging: ${charging}"
+echo "powersupply: ${powersupply}"
+echo "temperature: ${temperature}"
+
+
+## /sbin/sysctl -a | grep -i acpi
+## hw.sensors.acpibat0.volt0=11.10 VDC (voltage), OK
+## hw.sensors.acpibat0.volt1=12.57 VDC (current voltage), OK
+## hw.sensors.acpibat0.watthour0=22.32 Wh (last full capacity)
+## hw.sensors.acpibat0.watthour1=0.00 Wh (warning capacity)
+## hw.sensors.acpibat0.watthour2=0.12 Wh (low capacity)
+## hw.sensors.acpibat0.watthour3=16.74 Wh (remaining capacity)
+## hw.sensors.acpibat0.raw0=2 (battery charging), OK
+## hw.sensors.acpibat0.raw1=2476 (rate)
+## hw.sensors.acpiac0.indicator0=On (power supply)
+## hw.sensors.acpitz0.temp0=36.95 degC (zone temperature)
