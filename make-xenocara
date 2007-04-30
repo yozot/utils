@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xenocara,v 1.1 2007/04/30 03:30:43 yozo Exp $
+## $Id: make-xenocara,v 1.2 2007/04/30 03:58:29 yozo Exp $
 ## make-xenocara script based on make-xf4
 ## if you wanna record the output, type
 ##     (make-xenocara 2>&1 ) > logfile &
@@ -17,6 +17,8 @@ EXISTS_OBJDIR="YES" ## assumes obj dir by default
 XDMDIR=/etc/X11/xdm
 XDMOLDDIR=/etc/X11/xdm_old
 DESTDIR=/var/tmp/xenocara
+XENOCARA_TOP=/usr/src/xenocara
+XENOCARA_OBJDIR=/usr/xobj build
 
 echo -n "$0: "
 date
@@ -112,14 +114,14 @@ if [  X${EXISTS_OBJDIR} = XYES ]; then
   ## pwd
   ## echo "$0: doing \"lndir\" ..."
   ## lndir ${SRCDIR}
-  make DESTDIR=${DESTDIR} XENOCARA_TOP=/usr/src/xenocara XENOCARA_OBJDIR=/usr/xobj obj
+  make DESTDIR=${DESTDIR} XENOCARA_TOP=${XENOCARA_TOP} XENOCARA_OBJDIR=${XENOCARA_OBJDIR} obj
 fi
 
 ## echo -n "$0: moving ${XDMDIR} to ${XDMOLDDIR} ..."
 ## mv ${XDMDIR} ${XDMOLDDIR}
 echo -n "$0: \"make build\" start..."
 date
-make DESTDIR=${DESTDIR} build
+make DESTDIR=${DESTDIR} XENOCARA_TOP=${XENOCARA_TOP} XENOCARA_OBJDIR=${XENOCARA_OBJDIR} build
 date
 
 echo -n "$0: current dir is "
