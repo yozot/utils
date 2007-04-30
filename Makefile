@@ -1,7 +1,7 @@
-## $Id: Makefile,v 1.6 2007/04/26 00:25:43 yozo Exp $
+## $Id: Makefile,v 1.7 2007/04/30 03:30:42 yozo Exp $
 
 FILES= rotlogs clean cmp-and-remove do-cvs \
-       make-fakedist make-kernel make-userland make-xf4 \
+       make-fakedist make-kernel make-userland make-xf4 make-xenocara \
        checksites marks picks pu smime vaio xtermtitle \
        getpgpkey viewtext viewurl acpibat
 
