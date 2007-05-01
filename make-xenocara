@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xenocara,v 1.4 2007/05/01 12:44:54 yozo Exp $
+## $Id: make-xenocara,v 1.5 2007/05/01 13:09:14 yozo Exp $
 ## make-xenocara script based on make-xf4
 ## if you wanna record the output, type
 ##     (make-xenocara 2>&1 ) > logfile &
@@ -119,8 +119,8 @@ if [  X${EXISTS_OBJDIR} = XYES ]; then
   make obj
 fi
 
-## echo -n "$0: moving ${XDMDIR} to ${XDMOLDDIR} ..."
-## mv ${XDMDIR} ${XDMOLDDIR}
+echo -n "$0: moving ${XDMDIR} to ${XDMOLDDIR} ..."
+mv ${XDMDIR} ${XDMOLDDIR}
 echo -n "$0: \"make build\" start..."
 date
 make build
