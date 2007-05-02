@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: rotlogs,v 1.1 2002/12/05 17:04:15 yozo Exp $
+## $Id: rotlogs,v 1.2 2007/05/02 12:37:37 yozo Exp $
 ##
 ## log-make-fakedist added -- yozo.  Fri Dec 21 06:46:00 JST 2001
 ##
@@ -14,7 +14,7 @@
 
 LOGDIR=/usr/local/tmp
 FILES='log-cvs log-make-kernel log-make-userland log-make-fakedist \
-       log-make-x11 log-make-xf4 log-make-fakedist'
+       log-make-x11 log-make-xf4 log-make-xenocara log-make-fakedist'
 
 move() { ## $1 $2
   for f in ${FILES}
