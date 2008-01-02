@@ -1,12 +1,12 @@
 #!/bin/sh
-## $Id: make-xenocara,v 1.5 2007/05/01 13:09:14 yozo Exp $
+## $Id: make-xenocara,v 1.6 2008/01/02 22:34:35 yozo Exp $
 ## make-xenocara script based on make-xf4
 ## if you wanna record the output, type
 ##     (make-xenocara 2>&1 ) > logfile &
 ## and see logfile.
 ## -- yozo.  Mon Apr 30 12:04:48 JST 2007
 
-PATH=/sbin:/usr/sbin:/bin:/usr/bin
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin
 
 LOGDIR=/usr/local/tmp
 SRCDIR=/usr/src/xenocara
