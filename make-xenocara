@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xenocara,v 1.7 2008/03/23 13:39:00 yozo Exp $
+## $Id: make-xenocara,v 1.8 2008/03/23 15:27:12 yozo Exp $
 ## make-xenocara script based on make-xf4
 ## if you wanna record the output, type
 ##     (make-xenocara 2>&1 ) > logfile &
@@ -32,10 +32,10 @@ df -k
 echo
 
 ## miscellaneous checking before compiling.
-if [ -d ${SRCDIR} ] ; then
-  echo "$0: ${SRCDIR} exists. progressing..."
+if [ -d ${XSRCDIR} ] ; then
+  echo "$0: ${XSRCDIR} exists. progressing..."
 else
-  echo "$0: ${SRCDIR} does not exist. check it."
+  echo "$0: ${XSRCDIR} does not exist. check it."
   exit 10
 fi
 
@@ -95,7 +95,7 @@ if [ ${mach} = "i386" -a "X${tkq}" = "X" ]; then
 fi
 
 #### move to src directory
-cd ${SRCDIR}
+cd ${XSRCDIR}
 echo -n "$0: current dir is "
 pwd
 ls -aFl
@@ -115,7 +115,7 @@ if [  X${EXISTS_OBJDIR} = XYES ]; then
   ## echo -n "$0: current dir is "
   ## pwd
   ## echo "$0: doing \"lndir\" ..."
-  ## lndir ${SRCDIR}
+  ## lndir ${XSRCDIR}
   make obj
 fi
 
