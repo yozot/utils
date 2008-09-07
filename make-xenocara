@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xenocara,v 1.8 2008/03/23 15:27:12 yozo Exp $
+## $Id: make-xenocara,v 1.9 2008/09/07 08:27:02 yozo Exp $
 ## make-xenocara script based on make-xf4
 ## if you wanna record the output, type
 ##     (make-xenocara 2>&1 ) > logfile &
@@ -84,15 +84,16 @@ else
 fi
 echo
 
-## i386 architecture requires tcltk-8.3 package
-mach=`/usr/bin/uname -m`
-tkq=`/usr/sbin/pkg_info | grep tk-8.`
-if [ ${mach} = "i386" -a "X${tkq}" = "X" ]; then
-  echo "$0: tk-8.? required on this architecture(${mach})."
-  echo "$0: install tk-8.? package before executing me."
-  echo "$0: see release(8) man page."
-  exit 40
-fi
+## I believe xenocara doesn't require tcltk.
+## ## i386 architecture requires tcltk-8.3 package
+## mach=`/usr/bin/uname -m`
+## tkq=`/usr/sbin/pkg_info | grep tk-8.`
+## if [ ${mach} = "i386" -a "X${tkq}" = "X" ]; then
+##   echo "$0: tk-8.? required on this architecture(${mach})."
+##   echo "$0: install tk-8.? package before executing me."
+##   echo "$0: see release(8) man page."
+##   exit 40
+## fi
 
 #### move to src directory
 cd ${XSRCDIR}
