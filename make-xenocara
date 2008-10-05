@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xenocara,v 1.9 2008/09/07 08:27:02 yozo Exp $
+## $Id: make-xenocara,v 1.10 2008/10/05 22:32:39 yozo Exp $
 ## make-xenocara script based on make-xf4
 ## if you wanna record the output, type
 ##     (make-xenocara 2>&1 ) > logfile &
@@ -9,7 +9,7 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin
 
 LOGDIR=/usr/local/tmp
-XSRCDIR=/usr/src/xenocara
+XSRCDIR=/usr/xenocara
 OBJDIR=/usr/xobj
 ## OBJOLDDIR=${OBJDIR}/OLD_xenocara
 ## OBJBUILDDIR=${OBJDIR}/XF4
