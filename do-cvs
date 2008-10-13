@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: do-cvs,v 1.5 2008/09/06 23:33:38 yozo Exp $
+## $Id: do-cvs,v 1.6 2008/10/13 00:35:37 yozo Exp $
 ## do-cvs
 ## -- yozo.  Thu Mar 22 12:02:49 JST 2001
 ## starting messages fixed -- yozo.  Thu May 10 11:29:53 JST 2001
@@ -62,7 +62,7 @@ date
 cvs -d ${cvsroot} update -PAd ${tag} src ports www
 date
 
-cd /usr/src
+## cd /usr/src
 echo -n "$0: current dir is "
 pwd
 echo "$0: starting cvs update xenocara from ${cvsroot}..."
