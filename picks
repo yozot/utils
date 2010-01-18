@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.14 2006/08/12 03:14:31 yozo Exp $
+## $Id: picks,v 1.15 2010/01/18 16:41:36 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -82,7 +82,7 @@ do_command pick x-ml-name   sig-dsm-memb  dsm
 do_command pick x-sender    ieice.org     ieice
 do_command pick sender      owner-qed@    qed
 do_command pick sender      caml-list     caml
-do_command pick sender      coq-club      coq
+do_command pick x-loop      coq-club      coq
 do_command pick sender      mizar-forum   mizar
 do_command pick sender      rsnt          metrorsnt
 do_command pick sender      owner-tnt     metrotnt
