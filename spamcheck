@@ -1,13 +1,17 @@
 #!/bin/sh
-## $Id: spamcheck,v 1.1 2011/06/25 02:58:22 yozo Exp $
+## $Id: spamcheck,v 1.2 2011/06/25 04:48:20 yozo Exp $
 
 pick \
   --from nate.com -or --from nownuri -or --from naver.com -or --from yahoo.co.kr -or \
   --from hitel.net -or --from freechal.com -or --from viagr -or --from topliding -or \
   --from biteki-news -or --from paran.com -or --from simmani -or --from hosanna -or \
-  --from jubu.com -or \
+  --from jubu.com -or --from unitel.co -or --from dreamwiz -or --from postown -or \
+  --from querohost.com.br -or --from @mail.ru -or --from hanmir -or --from celeb -or \
+  --from @rogers.com -or --from servebbs -or --from paxnet -or --from hananet -or \
+  --from uket-ri500 -or --from discount@ -or --from lycos.co.kr -or --from auction -or \
+  --from wakaduma -or --from hitoduma -or --from empal -or \
   --subject rolex -or --subject sex -or --subject penis -or --subject viagr -or \
   --subject pharmac -or --subject phenterm -or --subject cialis -or --subject pills -or \
-  --subject vicodin -or \
-  --to shinkun \
+  --subject vicodin -or --subject replic -or --subject drug -or \
+  --to shinkun -or --to kanossa@ -or --to ykoguchi@ -or --to junkers@ \
   -seq spam
