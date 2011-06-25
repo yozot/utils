@@ -1,9 +1,9 @@
-## $Id: Makefile,v 1.7 2007/04/30 03:30:42 yozo Exp $
+## $Id: Makefile,v 1.8 2011/06/25 02:58:22 yozo Exp $
 
 FILES= rotlogs clean cmp-and-remove do-cvs \
        make-fakedist make-kernel make-userland make-xf4 make-xenocara \
        checksites marks picks pu smime vaio xtermtitle \
-       getpgpkey viewtext viewurl acpibat
+       getpgpkey viewtext viewurl acpibat spamcheck
 
 INSTALLDIR=${HOME}/bin
 INSTALL=/usr/bin/install

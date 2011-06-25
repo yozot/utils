@@ -1,0 +1,13 @@
+#!/bin/sh
+## $Id: spamcheck,v 1.1 2011/06/25 02:58:22 yozo Exp $
+
+pick \
+  --from nate.com -or --from nownuri -or --from naver.com -or --from yahoo.co.kr -or \
+  --from hitel.net -or --from freechal.com -or --from viagr -or --from topliding -or \
+  --from biteki-news -or --from paran.com -or --from simmani -or --from hosanna -or \
+  --from jubu.com -or \
+  --subject rolex -or --subject sex -or --subject penis -or --subject viagr -or \
+  --subject pharmac -or --subject phenterm -or --subject cialis -or --subject pills -or \
+  --subject vicodin -or \
+  --to shinkun \
+  -seq spam
