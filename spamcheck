@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: spamcheck,v 1.6 2011/06/28 18:32:40 yozo Exp $
+## $Id: spamcheck,v 1.7 2011/07/03 04:09:20 yozo Exp $
 
 pick \
   --from nate.com -or --from nownuri -or --from naver.com -or --from yahoo.co.kr -or \
@@ -13,6 +13,7 @@ pick \
   --from netian.com -or --from hanmail -or --from hanafo -or --from sokuyari -or \
   --from chollian -or --from chol.com -or --from @excite.co.jp -or --from @livedoor.com -or \
   --from infomail@ -or --from @aol.com -or --from @yahoo.co.jp -or --from @live.co.kr -or \
+  --from picomomo -or \
   --subject rolex -or --subject sex -or --subject penis -or --subject viagr -or \
   --subject pharma -or --subject phenterm -or --subject cialis -or --subject pill -or \
   --subject vicodin -or --subject replic -or --subject drug -or --subject valium -or \
