@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: spamcheck,v 1.8 2011/07/11 00:12:51 yozo Exp $
+## $Id: spamcheck,v 1.9 2011/07/23 14:25:26 yozo Exp $
 
 pick \
   --from nate.com -or --from nownuri -or --from naver.com -or --from yahoo.co.kr -or \
@@ -11,14 +11,14 @@ pick \
   --from uket-ri500 -or --from discount@ -or --from lycos.co.kr -or --from auction -or \
   --from wakaduma -or --from hitoduma -or --from empal -or --from bignews@ -or \
   --from netian.com -or --from hanmail -or --from hanafo -or --from sokuyari -or \
-  --from chollian -or --from chol.com -or --from @excite.co.jp -or --from @livedoor.com -or \
+  --from chollian -or --from chol.com -or --from @excite.co.jp -or \
   --from infomail@ -or --from @aol.com -or --from @yahoo.co.jp -or --from @live.co.kr -or \
   --from picomomo -or --from @msn.com -or --from @estyle.ne.jp -or --from hotmail.co.jp -or \
-  --from hotmail.com -or --from lovepotion -or --from @goo.ne.jp -or \
+  --from hotmail.com -or --from lovepotion -or --from @goo.ne.jp -or --from kornet -or \
   --subject rolex -or --subject sex -or --subject penis -or --subject viagr -or \
   --subject pharma -or --subject phenterm -or --subject cialis -or --subject pill -or \
   --subject vicodin -or --subject replic -or --subject drug -or --subject valium -or \
-  --subject 'HCG Diet' -or --subject erection -or \
+  --subject 'HCG Diet' -or --subject erection -or --subject 'HCG diet' -or \
   --return-path paran.com -or --return-path hanafo -or --return-path netian.com -or \
   --reply-to dreamwiz -or --reply-to lycos.co.kr -or --reply-to hitel.net -or \
   --reply-to hananet -or \
