@@ -1,12 +1,13 @@
 #!/bin/sh
-## $Id: spamcheck,v 1.9 2011/07/23 14:25:26 yozo Exp $
+## $Id: spamcheck,v 1.10 2011/10/09 04:12:22 yozo Exp $
 
 pick \
   --from nate.com -or --from nownuri -or --from naver.com -or --from yahoo.co.kr -or \
   --from hitel.net -or --from freechal.com -or --from viagr -or --from topliding -or \
   --from biteki-news -or --from paran.com -or --from simmani -or --from hosanna -or \
   --from jubu.com -or --from unitel.co -or --from dreamwiz -or --from postown -or \
-  --from querohost.com.br -or --from @mail.ru -or --from hanmir -or --from celeb -or \
+  --from querohost.com.br -or --from @mail.ru -or --from hanmir -or --from hanmil -or \
+  --from '<info@.*info>' -or --from celeb -or \
   --from @rogers.com -or --from servebbs -or --from paxnet -or --from hananet -or \
   --from uket-ri500 -or --from discount@ -or --from lycos.co.kr -or --from auction -or \
   --from wakaduma -or --from hitoduma -or --from empal -or --from bignews@ -or \
@@ -20,8 +21,9 @@ pick \
   --subject vicodin -or --subject replic -or --subject drug -or --subject valium -or \
   --subject 'HCG Diet' -or --subject erection -or --subject 'HCG diet' -or \
   --return-path paran.com -or --return-path hanafo -or --return-path netian.com -or \
+  --return-path paxnet -or --return-path empal -or \
   --reply-to dreamwiz -or --reply-to lycos.co.kr -or --reply-to hitel.net -or \
-  --reply-to hananet -or \
+  --reply-to hananet -or --reply-to jubu.com -or \
   --to shinkun -or --to kanossa@ -or --to ykoguchi@ -or --to junkers@ -or \
   --to nakasima@ -or --to yumiko@ -or \
   --x-mailer egroups -or \
