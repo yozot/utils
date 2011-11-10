@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: spamcheck,v 1.11 2011/10/24 18:08:03 yozo Exp $
+## $Id: spamcheck,v 1.12 2011/11/10 23:34:08 yozo Exp $
 
 pick \
   --from nate.com -or --from nownuri -or --from naver.com -or --from yahoo.co.kr -or \
@@ -7,15 +7,16 @@ pick \
   --from biteki-news -or --from paran.com -or --from simmani -or --from hosanna -or \
   --from jubu.com -or --from unitel.co -or --from dreamwiz -or --from postown -or \
   --from querohost.com.br -or --from @mail.ru -or --from hanmir -or --from hanmil -or \
-  --from '<info@.*info>' -or --from celeb -or \
+  --from '<mag@.*info>' -or --from '<mail@.*info>' -or --from '<info@.*info>' -or \
+  --from celeb -or \
   --from @rogers.com -or --from servebbs -or --from paxnet -or --from hananet -or \
   --from uket-ri500 -or --from discount@ -or --from lycos.co.kr -or --from auction -or \
   --from wakaduma -or --from hitoduma -or --from empal -or --from bignews@ -or \
   --from netian.com -or --from hanmail -or --from hanafo -or --from sokuyari -or \
   --from chollian -or --from chol.com -or --from @excite.co.jp -or \
-  --from infomail@ -or --from @aol.com -or --from @yahoo.co.jp -or --from @live.co.kr -or \
+  --from @aol.com -or --from @yahoo.co.jp -or --from @live.co.kr -or \
   --from picomomo -or --from @msn.com -or --from @estyle.ne.jp -or --from hotmail.co.jp -or \
-  --from lovepotion -or --from @goo.ne.jp -or --from kornet -or \
+  --from lovepotion -or --from @goo.ne.jp -or --from kornet -or --from alachan-mail -or \
   --subject rolex -or --subject sex -or --subject penis -or --subject viagr -or \
   --subject pharma -or --subject phenterm -or --subject cialis -or --subject pill -or \
   --subject vicodin -or --subject replic -or --subject drug -or --subject valium -or \
