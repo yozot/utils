@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: make-xenocara,v 1.10 2008/10/05 22:32:39 yozo Exp $
+## $Id: make-xenocara,v 1.11 2012/08/19 06:13:21 yozo Exp $
 ## make-xenocara script based on make-xf4
 ## if you wanna record the output, type
 ##     (make-xenocara 2>&1 ) > logfile &
@@ -11,7 +11,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin
 LOGDIR=/usr/local/tmp
 XSRCDIR=/usr/xenocara
 OBJDIR=/usr/xobj
-## OBJOLDDIR=${OBJDIR}/OLD_xenocara
+OBJOLDDIR=${OBJDIR}/.OLD
 ## OBJBUILDDIR=${OBJDIR}/XF4
 EXISTS_OBJDIR="YES" ## assumes obj dir by default
 XDMDIR=/etc/X11/xdm
@@ -34,6 +34,7 @@ echo
 ## miscellaneous checking before compiling.
 if [ -d ${XSRCDIR} ] ; then
   echo "$0: ${XSRCDIR} exists. progressing..."
+  echo ""
 else
   echo "$0: ${XSRCDIR} does not exist. check it."
   exit 10
@@ -47,37 +48,27 @@ fi
 #### checking if obj directory exists.
 if [ -d ${OBJDIR} ] ; then
   echo "$0: ${OBJDIR} exists."
-  ## if [ -d ${OBJOLDDIR} ] ; then
-  ##   echo "$0: ${OBJOLDDIR} exists. remove this before executing me."
-  ##   exit 20
-  ## fi
-  ## if [ -d ${OBJBUILDDIR} ] ; then
-  ##   echo "$0: ${OBJBUILDDIR} exists."
-  ##   ls -aFl ${OBJBUILDDIR}
-  ##   echo "$0: disk usage(du -sk ${OBJBUILDDIR}/*)"
-  ##   du -sk ${OBJBUILDDIR}/*
-  ##   echo
-  ##   ## we have a choice either
-  ##   ##   (1) moving and removing background
-  ##   ##   (2) removing foreground
-  ##   ## "man release" describes (1), but (2) is better sometimes; e.g.,
-  ##   ## ${OBJBUILDDIR} and ${OBJOLDDIR} exist on different partitions. 
-  ##   echo "$0: start cleaning now..."
-  ##   mkdir -p ${OBJOLDDIR}
-  ##   ## shell doesn't include dot files here,
-  ##   ## but no problem because no dot files exist actually.
-  ##   echo "$0: ${OBJBUILDDIR} emptied..."
-  ##   mv ${OBJBUILDDIR}/* ${OBJOLDDIR}
-  ##   echo "$0: removing ${OBJOLDDIR} directory in background."
-  ##   rm -rf ${OBJOLDDIR} &
-  ## else
-  ##   echo "$0: ${OBJBUILDDIR} does not exist. mkdir now..."
-  ##   mkdir -p ${OBJBUILDDIR}
-  ## fi
-  ## if [ ! -d ${OBJBUILDDIR} ] ; then
-  ##   echo "$0: ${OBJBUILDDIR} should exist but can't find it. why??"
-  ##   exit 30
-  ## fi
+  if [ -d ${OBJOLDDIR} ] ; then
+    echo "$0: ${OBJOLDDIR} exists. remove this before executing me."
+    exit 20
+  fi
+
+  echo "$0: start cleaning now..."
+
+  echo "$0: disk usage(du -sk ${OBJDIR}/*)"
+  du -sk ${OBJDIR}/*
+  echo ""
+
+  mkdir -p ${OBJOLDDIR}
+  echo "$0: ${OBJDIR} emptied..."
+  mv ${OBJDIR}/* ${OBJOLDDIR}
+  rm -rf ${OBJOLDDIR}
+  echo "$0: ${OBJDIR} emptied...done."
+
+  echo "$0: disk usage(du -sk ${OBJDIR}/*)"
+  du -sk ${OBJDIR}/*
+  echo ""
+
 else
   echo "$0: ${OBJDIR} does not exist. in-place compilation progressing..."
   EXISTS_OBJDIR="NO"
@@ -140,5 +131,3 @@ echo
 date
 
 ## end_of_file.
-
-
