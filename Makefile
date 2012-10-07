@@ -1,9 +1,9 @@
-## $Id: Makefile,v 1.8 2011/06/25 02:58:22 yozo Exp $
+## $Id: Makefile,v 1.9 2012/10/07 09:34:09 yozo Exp $
 
 FILES= rotlogs clean cmp-and-remove do-cvs \
        make-fakedist make-kernel make-userland make-xf4 make-xenocara \
        checksites marks picks pu smime vaio xtermtitle \
-       getpgpkey viewtext viewurl acpibat spamcheck
+       getpgpkey viewtext viewurl acpibat spamcheck ypkg
 
 INSTALLDIR=${HOME}/bin
 INSTALL=/usr/bin/install
@@ -20,7 +20,7 @@ diff:
 install:
 	@for i in $(FILES) ; do \
 	  echo "installing $$i into $(INSTALLDIR)..." ; \
-	  $(INSTALL) -b -m 550 $$i $(INSTALLDIR) ; \
+	  $(INSTALL) -pb -m 550 $$i $(INSTALLDIR) ; \
 	done
 
 dist:
