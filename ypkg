@@ -1,18 +1,73 @@
 #!/bin/sh
-## $Id: ypkg,v 1.1 2012/10/07 09:24:50 yozo Exp $
+## $Id: ypkg,v 1.2 2012/10/07 12:59:56 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
 
-if [ $# -gt 0 ]; then
+usage(){
     echo "usage: $0"
-    echo "lists all packages on which no package depends."
+    echo "             lists all packages on which no package depends."
+    echo "       $0 pkgname"
+    echo "             show dependence tree with pkgname as the root."
+}
+
+toplevel(){
+  for i in ${PKGDBPATH}/* ; do
+    if [ ! -f ${i}/+REQUIRED_BY ]; then
+        basename ${i}
+    fi
+  done
+}
+
+expand_tabs(){
+  if [ $1 -ge 1 ]; then
+    echo -n "    ";
+    expand_tabs `expr $1 - 1`
+  fi
+}
+
+## expand_tabs(){
+##   count=$1
+##   while [ ${count} -ge 1 ]; do
+##     echo -n "    ";
+##     count=`expr ${count} - 1`
+##   done
+## }
+
+show_dependents(){ ## arg1: recursion depth,  arg2: pkgname
+    pkgname=`cd ${PKGDBPATH} && ls | grep $2`
+    pkgnamematched=`echo ${pkgname} | wc -w`
+    if [ $pkgnamematched -ge 2 ]; then
+        echo "ERROR! ambiguous package name"
+        echo "$pkgname"
+        exit 10
+    fi
+    expand_tabs "$1"
+    echo "[$1] ${pkgname}"
+    requiring="${PKGDBPATH}/${pkgname}/+REQUIRING"
+    if [ -f ${requiring} ]; then
+      depends=`cat ${requiring}`
+      depth=`expr 1 + $1`
+      for i in ${depends}; do
+        ## show_dependents "${depth}" "$i"
+        show_dependents `expr 1 + $1` "$i"
+      done
+    fi
+}
+
+
+## main routine starts here
+
+if [ $# -eq 1 ]; then
+  if [ "$1" = "-help" ]; then
+      usage
+      exit 0
+  else
+    show_dependents 0 $1
+  fi
+elif [ $# -eq 0 ]; then
+    toplevel
+else
+    usage
     exit 0
 fi
-
-for i in ${PKGDBPATH}/* ; do
-  if [ ! -f ${i}/+REQUIRED_BY ]; then
-      basename ${i}
-  fi
-done
-
