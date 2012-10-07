@@ -1,0 +1,18 @@
+#!/bin/sh
+## $Id: ypkg,v 1.1 2012/10/07 09:24:50 yozo Exp $
+##
+
+PKGDBPATH=/var/db/pkg
+
+if [ $# -gt 0 ]; then
+    echo "usage: $0"
+    echo "lists all packages on which no package depends."
+    exit 0
+fi
+
+for i in ${PKGDBPATH}/* ; do
+  if [ ! -f ${i}/+REQUIRED_BY ]; then
+      basename ${i}
+  fi
+done
+
