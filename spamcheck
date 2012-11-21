@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: spamcheck,v 1.12 2011/11/10 23:34:08 yozo Exp $
+## $Id: spamcheck,v 1.13 2012/11/21 16:17:46 yozo Exp $
 
 pick \
   --from nate.com -or --from nownuri -or --from naver.com -or --from yahoo.co.kr -or \
@@ -23,10 +23,11 @@ pick \
   --subject 'HCG Diet' -or --subject erection -or --subject 'HCG diet' -or \
   --return-path paran.com -or --return-path hanafo -or --return-path netian.com -or \
   --return-path paxnet -or --return-path empal -or \
+  --return-path docomo -or --return-path softbank -or --return-path ezweb -or \
   --reply-to dreamwiz -or --reply-to lycos.co.kr -or --reply-to hitel.net -or \
-  --reply-to hananet -or --reply-to jubu.com -or \
+  --reply-to hananet -or --reply-to jubu.com -or --reply-to docomo -or \
   --to shinkun -or --to kanossa@ -or --to ykoguchi@ -or --to junkers@ -or \
   --to nakasima@ -or --to yumiko@ -or \
-  --x-mailer egroups -or \
+  --x-mailer egroups -or --x-mailer rainbow -or --x-mailer 'the bat' -or \
   --content-type windows-1251 \
   -seq spam
