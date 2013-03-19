@@ -1,41 +1,13 @@
 #!/bin/sh
-## $Id: smartless,v 1.1 2012/10/07 09:34:09 yozo Exp $
+## $Id: smartless,v 1.2 2013/03/19 11:07:27 yozo Exp $
 ##
-## assumes the terminal supports utf-8.
 
 LESSCMD=less
+TERMINALCHARSET=utf-8 ## assumes the terminal supports utf-8.
 
 if [ -n "${charset}" ]; then
   echo "*** $0 : charset is ${charset} ***"
-  case "${charset}" in
-    iso-2022-jp)
-      ## echo "ISO-2022-JP passed."
-      iconv -f iso-2022-jp-2 -t utf-8 < $1 | ${LESSCMD}
-      ;;
-    euc-jp)
-      ## echo "EUC-JP passed."
-      iconv -f euc-jp -t utf-8 < $1 | ${LESSCMD}
-      ;;
-    shift_jis)
-      ## echo "SHIFT_JIS passed."
-      iconv -f shift_jis -t utf-8 < $1 | ${LESSCMD}
-      ;;
-    iso-8859-*)
-      ## echo "${charset} passed."
-      iconv -f "${charset}" -t utf-8 < $1 | ${LESSCMD}
-      ;;
-    windows-*)
-      ## echo "${charset} passed."
-      iconv -f "${charset}" -t utf-8 < $1 | ${LESSCMD}
-      ;;
-    "utf-8")
-      ## echo "UTF-8 passed."
-      ${LESSCMD} $1
-      ;;
-    *)
-      echo "$0: unknown charset passed."
-      ;;
-  esac
+  iconv -f "${charset}" -t "${TERMINALCHARSET}" < "$1" | "${LESSCMD}"
 else
   echo "*** $0 : no charset is specified ***"
   ${LESSCMD} $1
