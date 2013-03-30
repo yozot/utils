@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: ypkg,v 1.4 2013/03/23 05:54:26 yozo Exp $
+## $Id: ypkg,v 1.5 2013/03/30 18:35:30 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
@@ -35,7 +35,7 @@ expand_tabs(){
 ## }
 
 show_dependents(){ ## arg1: recursion depth,  arg2: pkgname,  arg3: parent pkgname (when arg1 > 0)
-    pkgname=`cd ${PKGDBPATH} && ls | grep $2`
+    pkgname=`cd ${PKGDBPATH} && ls -a | grep $2`
     pkgnamematched=`echo ${pkgname} | wc -w`
     if [ $pkgnamematched -ge 2 ]; then
         echo "ERROR! ambiguous package name"
