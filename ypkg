@@ -1,14 +1,18 @@
 #!/bin/sh
-## $Id: ypkg,v 1.6 2013/03/31 04:51:44 yozo Exp $
+## $Id: ypkg,v 1.7 2013/04/29 18:12:47 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
+PORTSDIR=/usr/ports
 
 usage(){
-    echo "usage: $0"
-    echo "             lists all packages on which no package depends."
+    echo "usage:"
+    echo "       $0 [-top]"
+    echo "             lists all packages on which no package depends; the default action."
     echo "       $0 pkgname"
     echo "             show dependence tree with pkgname as the root."
+    echo "       $0 -check"
+    echo "             lists all packages for which updates are available in ports tree"
 }
 
 toplevel(){
@@ -87,18 +91,80 @@ show_dependents(){ ## arg1: recursion depth,  arg2: pkgname,  arg3: parent pkgna
 ##     fi
 ## }
 
+check(){
+
+  cd "${PKGDBPATH}"
+  for i in * ; do
+    fullpkgname=
+    pkgpathfull=
+    len_pkgpathfull=
+    pkgpath=
+    subpack=
+    flav=
+    ismystuff=
+
+    ## echo -n "CHECK: ${i} : "
+    pkgpathfull=`sed -n '/comment pkgpath=/s/^.* pkgpath=\([^, ][^ ]*\) .*$/\1/p' "${i}"/+CONTENTS`
+    len_pkgpathfull=`echo "${pkgpathfull}" | wc -l`
+    if [ "${len_pkgpathfull}" -lt 1 -o 1 -gt "${len_pkgpathfull}" ]; then exit 10; fi
+
+    pkgpath=`echo "${pkgpathfull}" | sed -n 's/^\([^,][^,]*\).*$/\1/p'`
+    packflav=`echo "${pkgpathfull}" | sed -n 's/^[^,][^,]*\(,.*\)$/\1/p'`
+
+    ## ${packflav} is a comma-separated list of words, where
+    ## the first word may be a subpackage name with perpending "-", remaining are a list of flavor names
+    if [ -n "${packflav}" ]; then
+      case "${packflav}" in
+        ,-*)
+          subpack=`echo "${packflav}" | sed -n 's/,-\([^,][^,]*\).*/\1/p'`
+          flav=`echo "${packflav}" | sed -n 's/,-[^,][^,]*\(.*\)/\1/p' | sed 's/,/ /g'`
+          ## echo "CHECK: subpack($subpack) and flav($flav)"
+          ;;
+        *)
+          flav=`echo "${packflav}" | sed 's/,/ /g'`
+          ## echo "CHECK: flav only ($flav)"
+          ;;
+      esac
+    fi
+    ## echo "=== ${pkgpathfull} === ${pkgpath} === ${packflav} === ${subpack} === ${flav} ==="
+
+    if [ -d "${PORTSDIR}/mystuff/${pkgpath}" -a -f "${PORTSDIR}/mystuff/${pkgpath}/Makefile" ]; then
+      pkgpath="${PORTSDIR}/mystuff/${pkgpath}"
+      ismystuff="*"
+    elif [ -d "${PORTSDIR}/${pkgpath}" ]; then
+      pkgpath="${PORTSDIR}/${pkgpath}"
+    else
+      (echo "no pkgpath exists..." 1>&2)
+      exit 20
+    fi
+
+    if [ -n "${subpack}" ]; then
+      fullpkgname=`cd "${pkgpath}" && env FLAVOR="${flav}" make show="FULLPKGNAME-${subpack}"`
+    else
+      fullpkgname=`cd "${pkgpath}" && env FLAVOR="${flav}" make show=FULLPKGNAME`
+    fi
+
+    if [ "${i}" != "${fullpkgname}" ]; then
+      echo "${i} : update available as ${fullpkgname} ${ismystuff}"
+    fi
+  done
+}
 
 ## main routine starts here
 
-if [ $# -eq 1 ]; then
+if [ $# -eq 0 ]; then
+    toplevel
+elif [ $# -eq 1 ]; then
   if [ "$1" = "-help" ]; then
       usage
       exit 0
+  elif [ "$1" = "-top" ]; then
+    toplevel
+  elif [ "$1" = "-check" ]; then
+    check
   else
     show_dependents 0 $1
   fi
-elif [ $# -eq 0 ]; then
-    toplevel
 else
     usage
     exit 0
