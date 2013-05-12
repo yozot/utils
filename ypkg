@@ -1,9 +1,10 @@
 #!/bin/sh
-## $Id: ypkg,v 1.7 2013/04/29 18:12:47 yozo Exp $
+## $Id: ypkg,v 1.8 2013/05/12 07:27:55 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
 PORTSDIR=/usr/ports
+VERBOSE="off"
 
 usage(){
     echo "usage:"
@@ -112,16 +113,16 @@ check(){
     packflav=`echo "${pkgpathfull}" | sed -n 's/^[^,][^,]*\(,.*\)$/\1/p'`
 
     ## ${packflav} is a comma-separated list of words, where
-    ## the first word may be a subpackage name with perpending "-", remaining are a list of flavor names
+    ## the first word may be a subpackage name with prepending "-", remaining are a list of flavor names
     if [ -n "${packflav}" ]; then
       case "${packflav}" in
         ,-*)
           subpack=`echo "${packflav}" | sed -n 's/,-\([^,][^,]*\).*/\1/p'`
-          flav=`echo "${packflav}" | sed -n 's/,-[^,][^,]*\(.*\)/\1/p' | sed 's/,/ /g'`
+          flav=`echo "${packflav}" | sed -n 's/,-[^,][^,]*\(.*\)/\1/p' | sed 's/,/ /g' | sed 's/^ //'`
           ## echo "CHECK: subpack($subpack) and flav($flav)"
           ;;
         *)
-          flav=`echo "${packflav}" | sed 's/,/ /g'`
+          flav=`echo "${packflav}" | sed 's/,/ /g' | sed 's/^ //'`
           ## echo "CHECK: flav only ($flav)"
           ;;
       esac
