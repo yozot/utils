@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: ypkg,v 1.8 2013/05/12 07:27:55 yozo Exp $
+## $Id: ypkg,v 1.9 2013/05/12 07:46:20 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
@@ -12,7 +12,7 @@ usage(){
     echo "             lists all packages on which no package depends; the default action."
     echo "       $0 pkgname"
     echo "             show dependence tree with pkgname as the root."
-    echo "       $0 -check"
+    echo "       $0 [-verbose] -check"
     echo "             lists all packages for which updates are available in ports tree"
 }
 
@@ -127,7 +127,9 @@ check(){
           ;;
       esac
     fi
-    ## echo "=== ${pkgpathfull} === ${pkgpath} === ${packflav} === ${subpack} === ${flav} ==="
+    if [ x"${VERBOSE}" == x"on" ]; then
+      echo "=== ${pkgpathfull} === ${pkgpath} === ${packflav} === ${subpack} === ${flav} ==="
+    fi
 
     if [ -d "${PORTSDIR}/mystuff/${pkgpath}" -a -f "${PORTSDIR}/mystuff/${pkgpath}/Makefile" ]; then
       pkgpath="${PORTSDIR}/mystuff/${pkgpath}"
@@ -152,21 +154,35 @@ check(){
 }
 
 ## main routine starts here
+while [ $# -ge 0 ]; do
 
-if [ $# -eq 0 ]; then
-    toplevel
-elif [ $# -eq 1 ]; then
-  if [ "$1" = "-help" ]; then
-      usage
-      exit 0
-  elif [ "$1" = "-top" ]; then
-    toplevel
-  elif [ "$1" = "-check" ]; then
-    check
-  else
-    show_dependents 0 $1
-  fi
-else
-    usage
-    exit 0
-fi
+    if [ $# -eq 0 ]; then
+        toplevel
+        exit 0
+    fi
+
+    case "$1" in
+      -h*)
+        usage
+        exit 0
+        ;;
+      -top)
+        toplevel
+        exit 0
+        ;;
+      -check)
+        check
+        exit 0
+        ;;
+      -v*)
+        VERBOSE="on"
+        echo "CHECK: VERBOSE on"
+        shift
+        ;;
+      *)
+        show_dependents 0 "$1"
+        exit 0
+        ;;
+    esac
+done
+
