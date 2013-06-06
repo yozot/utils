@@ -1,9 +1,14 @@
 #!/bin/sh
-## $Id: smartless,v 1.2 2013/03/19 11:07:27 yozo Exp $
+## $Id: smartless,v 1.3 2013/06/06 16:53:14 yozo Exp $
 ##
 
 LESSCMD=less
-TERMINALCHARSET=utf-8 ## assumes the terminal supports utf-8.
+
+if [ -n "${MM_CHARSET}" ]; then
+  TERMINALCHARSET="${MM_CHARSET}" ## nmh assumes MM_CHARSET as terminal's native character set
+else
+  TERMINALCHARSET=utf-8 ## assumes the terminal supports utf-8 when MM_CHARSET not available
+fi
 
 if [ -n "${charset}" ]; then
   echo "*** $0 : charset is ${charset} ***"
