@@ -1,9 +1,10 @@
-## $Id: Makefile,v 1.10 2012/10/07 12:59:56 yozo Exp $
+## $Id: Makefile,v 1.11 2013/07/21 15:38:32 yozo Exp $
 
 FILES= rotlogs clean cmp-and-remove do-cvs \
        make-fakedist make-kernel make-userland make-xf4 make-xenocara \
        checksites marks picks pu smime vaio xtermtitle \
-       getpgpkey viewtext viewurl acpibat spamcheck ypkg smartless
+       getpgpkey viewtext viewurl acpibat spamcheck ypkg smartless \
+       show_subject yscan
 
 INSTALLDIR=${HOME}/bin
 INSTALL=/usr/bin/install
