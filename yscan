@@ -1,0 +1,57 @@
+#!/bin/sh
+## $Id: yscan,v 1.1 2013/07/21 15:36:57 yozo Exp $
+##
+
+SHOW_SUBJECT="show_subject"
+
+help(){
+  echo "usage: ${progname} messageID"
+}
+
+## main
+
+flag_debug=0
+FILE=
+FILEbasename=
+
+case "$1" in
+  -h*)
+    help
+    exit 0
+    break
+    ;;
+  -debug)
+    flag_debug=1
+    shift
+    ;;
+esac
+
+LIST=
+if [ -n "$*" ]; then
+  LIST=`mhlist -noheader -part 0 "$*" | egrep -v '^     ' | awk '{print $1;}'`
+fi
+
+if [ ${flag_debug} -eq 1 ]; then
+    echo "args: $*"
+    echo "LIST: ${LIST}"
+fi
+
+## if nothing specified, we assume the current message.
+if [ -z "${LIST}" ]; then
+    LIST="cur"
+fi
+
+for i in ${LIST}
+do
+  FILE=`mhpath "${i}"`
+  if [ ! -f "${FILE}" ]; then
+    ( echo "${FILE} not found." 1>&2 )
+    exit 20
+  fi
+  FILEbasename=`basename "${FILE}"`
+  echo -n "${FILEbasename}  "
+  cat "${FILE}" | "${SHOW_SUBJECT}"
+
+done
+
+########

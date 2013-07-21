@@ -1,0 +1,99 @@
+#!/bin/sh
+## $Id: show_subject,v 1.1 2013/07/21 15:36:57 yozo Exp $
+##
+
+progname=`basename "$0"`
+flag_debug=0
+
+help(){
+  echo "usage: ${progname} messageID"
+}
+
+## input: encoded string, "=?iso-2022-jp?B?.....?="
+## output: decoded string
+decode(){
+  charset=
+  BorQ="B"
+  content=
+  charset=`echo "$1" | sed 's/^\([^?][^?]*\)?\(.\)?\(.*\)$/\1/'`
+  BorQ=`echo "$1" | sed 's/^\([^?][^?]*\)?\(.\)?\(.*\)$/\2/' | tr 'BQ' 'bq'`
+  content=`echo "$1" | sed 's/^\([^?][^?]*\)?\(.\)?\(.*\)$/\3/'`
+  if [ ${flag_debug} -eq 1 ]; then
+    (echo "decode: charset=$charset" 1>&2 )
+    (echo "decode: BorQ=$BorQ"  1>&2 )
+    (echo "decode: content=$content" 1>&2)
+  fi
+  if [ "${charset}" = "iso-2022-jp" -a "${BorQ}" = "b" ]; then
+    echo "${content}" | base64 -d | iconv -f iso-2022-jp-2 -t "${MM_CHARSET}"
+  elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "q" ]; then
+    echo "${content}" | qprint -d | iconv -f iso-2022-jp-2 -t "${MM_CHARSET}"
+  elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "b" ]; then
+    echo "${content}" | base64 -d | iconv -f sjis -t "${MM_CHARSET}"
+  elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "q" ]; then
+    echo "${content}" | qprint -d | iconv -f sjis -t "${MM_CHARSET}"
+  elif [ "${charset}" = "utf-8" -a "${BorQ}" = "b" ]; then
+    echo "${content}" | base64 -d | iconv -f utf-8 -t "${MM_CHARSET}"
+  elif [ "${charset}" = "utf-8" -a "${BorQ}" = "q" ]; then
+    echo "${content}" | qprint -d | iconv -f utf-8 -t "${MM_CHARSET}"
+  fi
+}
+
+## main
+
+case "$1" in
+  -h*)
+    help
+    exit 0
+    break
+    ;;
+  -debug)
+   flag_debug=1
+    ;;
+esac
+
+TMPFILE1=`mktemp /tmp/XXXXXXXXXX` || exit 10
+TMPFILE2=`mktemp /tmp/XXXXXXXXXX` || exit 20
+
+sed '/^$/,$d' | sed -n '/^[sS][uU][bB][jJ][eE][cC][tT]:/,$p' > "${TMPFILE1}"
+
+FIRST=`head -1 "${TMPFILE1}" | sed 's/^Subject:[ 	]*//'`
+REMAIN=`tail -n +2 < "${TMPFILE1}" | sed '/^[^ 	]/,$d' | sed 's/^[ 	]*//'`
+
+echo "${FIRST}${REMAIN}" | tr -d '\n' > "${TMPFILE1}"
+if [ ${flag_debug} -eq 1 ]; then
+  cat "${TMPFILE1}" ; echo "\n****************"
+fi
+cat "${TMPFILE1}" | sed 's/ /\\040/g' |\
+          sed -e 's/=?[iI][sS][oO]-2022-[jJ][pP]?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: iso-2022-jp?\1?\2\
+/g' \
+              -e 's/=?[sS][hH][iI][fF][tT][-_][jJ][iI][sS]?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: shift-jis?\1?\2\
+/g' \
+              -e 's/=?[uU][tT][fF]-8?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: utf-8?\1?\2\
+/g' \
+    > "${TMPFILE2}"
+
+echo "" >> "${TMPFILE2}"
+
+LINE=
+
+cat "${TMPFILE2}" |\
+while read LINE; do
+  if [ ${flag_debug} -eq 1 ]; then
+    (echo "==>${LINE}<==" 1>&2)
+  fi
+  (echo "${LINE}" | egrep -q '^ENCODED:') \
+                                   && (arg=`echo "${LINE}" | sed 's/^ENCODED: *//'` && decode "$arg"  ) \
+                                   || (echo "${LINE}" | sed 's/\040/ /g')
+  ## (echo "${LINE}" | egrep -q '^ENCODED:') \
+  ##                                  && (echo "${LINE}" | sed 's/^ENCODED: *//' |  base64 -d) \
+  ##                                  || (echo "${LINE}" | sed 's/\040/ /g')
+done | tr -d '\n'
+
+
+echo ""
+
+rm "${TMPFILE1}" "${TMPFILE2}"
+
