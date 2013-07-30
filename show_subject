@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: show_subject,v 1.1 2013/07/21 15:36:57 yozo Exp $
+## $Id: show_subject,v 1.2 2013/07/30 00:27:12 yozo Exp $
 ##
 
 progname=`basename "$0"`
@@ -25,16 +25,24 @@ decode(){
   fi
   if [ "${charset}" = "iso-2022-jp" -a "${BorQ}" = "b" ]; then
     echo "${content}" | base64 -d | iconv -f iso-2022-jp-2 -t "${MM_CHARSET}"
-  elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "q" ]; then
+  elif [ "${charset}" = "iso-2022-jp" -a "${BorQ}" = "q" ]; then
     echo "${content}" | qprint -d | iconv -f iso-2022-jp-2 -t "${MM_CHARSET}"
   elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "b" ]; then
     echo "${content}" | base64 -d | iconv -f sjis -t "${MM_CHARSET}"
   elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "q" ]; then
     echo "${content}" | qprint -d | iconv -f sjis -t "${MM_CHARSET}"
+  elif [ "${charset}" = "euc-jp" -a "${BorQ}" = "b" ]; then
+    echo "${content}" | base64 -d | iconv -f euc-jp -t "${MM_CHARSET}"
+  elif [ "${charset}" = "euc-jp" -a "${BorQ}" = "q" ]; then
+    echo "${content}" | qprint -d | iconv -f euc-jp -t "${MM_CHARSET}"
   elif [ "${charset}" = "utf-8" -a "${BorQ}" = "b" ]; then
     echo "${content}" | base64 -d | iconv -f utf-8 -t "${MM_CHARSET}"
   elif [ "${charset}" = "utf-8" -a "${BorQ}" = "q" ]; then
     echo "${content}" | qprint -d | iconv -f utf-8 -t "${MM_CHARSET}"
+  elif [ "${charset}" = "gb2312" -a "${BorQ}" = "b" ]; then
+    echo "${content}" | base64 -d | iconv -f gb2312 -t "${MM_CHARSET}"
+  elif [ "${charset}" = "gb2312" -a "${BorQ}" = "q" ]; then
+    echo "${content}" | qprint -d | iconv -f gb2312 -t "${MM_CHARSET}"
   fi
 }
 
@@ -67,11 +75,17 @@ cat "${TMPFILE1}" | sed 's/ /\\040/g' |\
           sed -e 's/=?[iI][sS][oO]-2022-[jJ][pP]?\([bBqQ]\)?\([^?][^?]*\)?=/\
 ENCODED: iso-2022-jp?\1?\2\
 /g' \
+              -e 's/=?[eE][uU][cC][-_][jJ][pP]?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: euc-jp?\1?\2\
+/g' \
               -e 's/=?[sS][hH][iI][fF][tT][-_][jJ][iI][sS]?\([bBqQ]\)?\([^?][^?]*\)?=/\
 ENCODED: shift-jis?\1?\2\
 /g' \
               -e 's/=?[uU][tT][fF]-8?\([bBqQ]\)?\([^?][^?]*\)?=/\
 ENCODED: utf-8?\1?\2\
+/g' \
+              -e 's/=?[gG][bB]2312?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: gb2312?\1?\2\
 /g' \
     > "${TMPFILE2}"
 
