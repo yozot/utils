@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.17 2011/11/14 16:52:21 yozo Exp $
+## $Id: picks,v 1.18 2013/08/18 17:45:06 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -113,7 +113,7 @@ do_command pick sender      domain-talk   domain
 do_command pick sender      ip-users      ipusers
 do_command pick sender      icann-d       icannd
 
-do_command pick x-ml-name   janog         janog
+do_command pick list-id   janog         janog
 do_command search           jepg-ip.ad.jp jepg
 do_command pick sender      owner-ix-talk ix
 do_command search           mbone-jp      mbonejp
