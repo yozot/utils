@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: yscan,v 1.1 2013/07/21 15:36:57 yozo Exp $
+## $Id: yscan,v 1.2 2013/09/16 06:33:09 yozo Exp $
 ##
 
 SHOW_SUBJECT="show_subject"
@@ -28,7 +28,7 @@ esac
 
 LIST=
 if [ -n "$*" ]; then
-  LIST=`mhlist -noheader -part 0 "$*" | egrep -v '^     ' | awk '{print $1;}'`
+  LIST=`mhlist -noheader -part 0 $* | egrep -v '^     ' | awk '{print $1;}'`
 fi
 
 if [ ${flag_debug} -eq 1 ]; then
