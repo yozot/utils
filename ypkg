@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: ypkg,v 1.9 2013/05/12 07:46:20 yozo Exp $
+## $Id: ypkg,v 1.10 2013/09/24 17:05:12 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
@@ -141,10 +141,18 @@ check(){
       exit 20
     fi
 
-    if [ -n "${subpack}" ]; then
-      fullpkgname=`cd "${pkgpath}" && env FLAVOR="${flav}" make show="FULLPKGNAME-${subpack}"`
+    if [ -n "${flav}" ]; then
+      if [ -n "${subpack}" ]; then
+        fullpkgname=`cd "${pkgpath}" && env FLAVOR="${flav}" make show="FULLPKGNAME-${subpack}"`
+      else
+        fullpkgname=`cd "${pkgpath}" && env FLAVOR="${flav}" make show=FULLPKGNAME`
+      fi
     else
-      fullpkgname=`cd "${pkgpath}" && env FLAVOR="${flav}" make show=FULLPKGNAME`
+      if [ -n "${subpack}" ]; then
+        fullpkgname=`cd "${pkgpath}" && make show="FULLPKGNAME-${subpack}"`
+      else
+        fullpkgname=`cd "${pkgpath}" && make show=FULLPKGNAME`
+      fi
     fi
 
     if [ "${i}" != "${fullpkgname}" ]; then
