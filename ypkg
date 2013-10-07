@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: ypkg,v 1.10 2013/09/24 17:05:12 yozo Exp $
+## $Id: ypkg,v 1.11 2013/10/07 17:09:27 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
@@ -17,7 +17,7 @@ usage(){
 }
 
 toplevel(){
-  for i in ${PKGDBPATH}/* ; do
+  for i in ${PKGDBPATH}/* ${PKGDBPATH}/.libs* ; do
     if [ ! -f ${i}/+REQUIRED_BY ]; then
         basename ${i}
     fi
