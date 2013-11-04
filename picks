@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.18 2013/08/18 17:45:06 yozo Exp $
+## $Id: picks,v 1.19 2013/11/04 19:11:19 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -59,7 +59,7 @@ echo
 
 do_command pick list-owner  cert-advisory cert
 ## do_command pick sender     snmp-forum    certsnmp
-do_command pick return-path @us-cert.gov uscert
+do_command pick return-path @ncas.us-cert.gov uscert
 do_command pick reply-to    @jpcert       jpcert
 do_command pick list-id     bugtraq-jp    traqjp
 do_command pick return-path magazine@cyberpolice    cyberpolice
