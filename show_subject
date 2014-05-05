@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: show_subject,v 1.7 2014/04/08 19:04:28 yozo Exp $
+## $Id: show_subject,v 1.8 2014/05/05 05:21:45 yozo Exp $
 ##
 
 progname=`basename "$0"`
@@ -182,5 +182,9 @@ done | tr -d '\n'
 
 echo ""
 
-## rm "${TMPFILE1}" "${TMPFILE2}"
+if [ ${flag_debug} -eq 1 ]; then
+  echo "working files ${TMPFILE1} and ${TMPFILE2} left un-removed..." 1>&2
+else
+  rm "${TMPFILE1}" "${TMPFILE2}"
+fi
 
