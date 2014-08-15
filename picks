@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: picks,v 1.19 2013/11/04 19:11:19 yozo Exp $
+## $Id: picks,v 1.20 2014/08/15 06:09:22 yozo Exp $
 ## picks -- do pick to define sequences
 PATH=/bin:/usr/bin:/usr/local/bin
 
@@ -74,7 +74,7 @@ do_command pick subject     PRESS-writers freeb
 
 do_command pick errors-to   types         types
 do_command pick list-id     logic-ml      logic
-do_command pick x-ml-name   asian-logic   asian
+do_command pick list-id     asian-logic   asian
 do_command pick list-id     kisoron-ml    kisoron
 do_command pick delivered-to slacs       slacs
 do_command pick x-ml-name   ipsj-info     ipsj
