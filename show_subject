@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: show_subject,v 1.8 2014/05/05 05:21:45 yozo Exp $
+## $Id: show_subject,v 1.9 2014/08/15 05:52:35 yozo Exp $
 ##
 
 progname=`basename "$0"`
@@ -104,6 +104,10 @@ decode(){
     echo "${content}" | base64 -d | iconv -f iso-8859-15 -t "${MM_CHARSET}" -c
   elif [ "${charset}" = "iso-8859-15" -a "${BorQ}" = "q" ]; then
     echo "${content}" | qprint -d | iconv -f iso-8859-15 -t "${MM_CHARSET}" -c
+  elif [ "${charset}" = "windows-1251" -a "${BorQ}" = "b" ]; then
+    echo "${content}" | base64 -d | iconv -f windows-1251 -t "${MM_CHARSET}" -c
+  elif [ "${charset}" = "windows-1251" -a "${BorQ}" = "q" ]; then
+    echo "${content}" | qprint -d | iconv -f windows-1251 -t "${MM_CHARSET}" -c
   elif [ "${charset}" = "windows-1253" -a "${BorQ}" = "b" ]; then
     echo "${content}" | base64 -d | iconv -f windows-1253 -t "${MM_CHARSET}" -c
   elif [ "${charset}" = "windows-1253" -a "${BorQ}" = "q" ]; then
