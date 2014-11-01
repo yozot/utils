@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: show_subject,v 1.9 2014/08/15 05:52:35 yozo Exp $
+## $Id: show_subject,v 1.10 2014/11/01 15:51:21 yozo Exp $
 ##
 
 progname=`basename "$0"`
@@ -28,90 +28,10 @@ decode(){
     echo "${content}" | base64 -d | iconv -f iso-2022-jp-2 -t "${MM_CHARSET}" -c
   elif [ "${charset}" = "iso-2022-jp" -a "${BorQ}" = "q" ]; then
     echo "${content}" | qprint -d | iconv -f iso-2022-jp-2 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f sjis -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "shift-jis" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f sjis -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "euc-jp" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f euc-jp -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "euc-jp" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f euc-jp -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "utf-8" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f utf-8 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "utf-8" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f utf-8 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "gb2312" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f gb2312 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "gb2312" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f gb2312 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "euc-kr" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f euc-kr -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "euc-kr" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f euc-kr -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-1" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-1 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-1" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-1 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-2" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-2 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-2" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-2 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-3" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-3 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-3" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-3 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-4" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-4 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-4" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-4 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-5" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-5 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-5" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-5 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-6" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-6 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-6" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-6 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-7" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-7 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-7" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-7 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-8" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-8 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-8" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-8 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-9" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-9 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-9" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-9 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-10" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-10 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-10" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-10 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-11" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-11 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-11" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-11 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-13" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-13 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-13" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-13 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-14" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-14 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-14" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-14 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-15" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f iso-8859-15 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "iso-8859-15" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f iso-8859-15 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "windows-1251" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f windows-1251 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "windows-1251" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f windows-1251 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "windows-1253" -a "${BorQ}" = "b" ]; then
-    echo "${content}" | base64 -d | iconv -f windows-1253 -t "${MM_CHARSET}" -c
-  elif [ "${charset}" = "windows-1253" -a "${BorQ}" = "q" ]; then
-    echo "${content}" | qprint -d | iconv -f windows-1253 -t "${MM_CHARSET}" -c
+  elif [ "${BorQ}" = "b" ]; then
+    echo "${content}" | base64 -d | iconv -f "${charset}" -t "${MM_CHARSET}" -c
+  elif [ "${BorQ}" = "q" ]; then
+    echo "${content}" | qprint -d | iconv -f "${charset}" -t "${MM_CHARSET}" -c
   fi
 
   return 0
@@ -166,6 +86,12 @@ ENCODED: iso-8859-\1?\2?\3\
 /g' \
               -e 's/=?[wW][iI][nN][dD][oO][wW][sS][-_]\([0-9][0-9][0-9][0-9]\)?\([bBqQ]\)?\([^?][^?]*\)?=/\
 ENCODED: windows-\1?\2?\3\
+/g' \
+              -e 's/=?[cC][pP]\([0-9][0-9][0-9][0-9]\)?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: cp\1?\2?\3\
+/g' \
+              -e 's/=?[uU][sS][-_][aA][sS][cC][iI][iI]?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: us-ascii?\1?\2\
 /g' \
     > "${TMPFILE2}"
 
