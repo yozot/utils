@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: ypkg,v 1.12 2013/10/14 15:08:48 yozo Exp $
+## $Id: ypkg,v 1.13 2014/12/14 06:31:45 yozo Exp $
 ##
 
 PKGDBPATH=/var/db/pkg
@@ -128,7 +128,7 @@ check(){
       esac
     fi
     if [ x"${VERBOSE}" == x"on" ]; then
-      echo "=== ${pkgpathfull} === ${pkgpath} === ${packflav} === ${subpack} === ${flav} ==="
+      echo -n "=== ${pkgpathfull} === ${pkgpath} === ${packflav} === ${subpack} === ${flav} ==="
     fi
 
     if [ -d "${PORTSDIR}/mystuff/${pkgpath}" -a -f "${PORTSDIR}/mystuff/${pkgpath}/Makefile" ]; then
@@ -153,6 +153,10 @@ check(){
       else
         fullpkgname=`cd "${pkgpath}" && make show=FULLPKGNAME`
       fi
+    fi
+
+    if [ x"${VERBOSE}" == x"on" ]; then
+      echo " ${fullpkgname} ==="
     fi
 
     if [ "${i}" != "${fullpkgname}" ]; then
