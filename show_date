@@ -1,0 +1,48 @@
+#!/bin/sh
+## $Id: show_date,v 1.1 2015/04/19 17:53:27 yozo Exp $
+##
+
+progname=`basename "$0"`
+flag_debug=0
+
+help(){
+  echo "usage: ${progname} messageID"
+}
+
+## main
+
+case "$1" in
+  -h*)
+    help
+    exit 0
+    break
+    ;;
+  -debug)
+   flag_debug=1
+    ;;
+esac
+
+date_header=`sed '/^$/,$d' | sed -n 's/^[dD][aA][tT][eE]:[ ]*\(.*\)$/\1/p'`
+## echo "date_header: ${date_header}"
+
+## a typical date header looks like "Date: Mon, 13 Apr 2015 17:00:51 +0900"
+## day-of-week day-of-month month year ...
+
+dayom=`echo ${date_header} | awk '{print $2;}' | sed 's/^0*//'`
+month=`echo ${date_header} | awk '{print $3;}' \
+       | sed -e 's/[jJ][aA][nN]/1/'  \
+             -e 's/[fF][eE][bB]/2/'  \
+             -e 's/[mM][aA][rR]/3/'  \
+             -e 's/[aA][pP][rR]/4/'  \
+             -e 's/[mM][aA][yY]/5/'  \
+             -e 's/[jJ][uU][nN]/6/'  \
+             -e 's/[jJ][uU][lL]/7/'  \
+             -e 's/[aA][uU][gG]/8/'  \
+             -e 's/[sS][eE][pP]/9/'  \
+             -e 's/[oO][cC][tT]/10/' \
+             -e 's/[nN][oO][vV]/11/' \
+             -e 's/[dD][eE][cC]/12/' `
+
+
+printf "%02d/%02d" "${month}" "${dayom}"
+
