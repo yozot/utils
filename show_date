@@ -1,5 +1,5 @@
 #!/bin/sh
-## $Id: show_date,v 1.1 2015/04/19 17:53:27 yozo Exp $
+## $Id: show_date,v 1.2 2015/05/05 07:44:24 yozo Exp $
 ##
 
 progname=`basename "$0"`
@@ -23,13 +23,25 @@ case "$1" in
 esac
 
 date_header=`sed '/^$/,$d' | sed -n 's/^[dD][aA][tT][eE]:[ ]*\(.*\)$/\1/p'`
-## echo "date_header: ${date_header}"
+
+if [ 1 -eq ${flag_debug} ]; then
+  echo "DEBUG: date_header == ${date_header}"
+fi
 
 ## a typical date header looks like "Date: Mon, 13 Apr 2015 17:00:51 +0900"
-## day-of-week day-of-month month year ...
+## Day-of-Week Day-of-Month Month Year ...
+## note that Day-of-Week is optional.
 
-dayom=`echo ${date_header} | awk '{print $2;}' | sed 's/^0*//'`
-month=`echo ${date_header} | awk '{print $3;}' \
+## dayom=`echo ${date_header} | awk '{print $2;}' | sed 's/^0*//'`
+## month=`echo ${date_header} | awk '{print $3;}' \
+
+dayom=`echo ${date_header} | sed -E 's/^(([a-zA-Z][a-zA-Z][a-zA-Z],)*[ \t]*([1-9]|[12][0-9]|3[01])[ \t]*([a-zA-Z][a-zA-Z][a-zA-Z]).*)$/\3/'`
+
+if [ 1 -eq ${flag_debug} ]; then
+  echo "DEBUG: dayofm == ${dayom}"
+fi
+
+month=`echo ${date_header} | sed -E 's/^(([a-zA-Z][a-zA-Z][a-zA-Z],)*[ \t]*([1-9]|[12][0-9]|3[01])[ \t]*([a-zA-Z][a-zA-Z][a-zA-Z]).*)$/\4/' \
        | sed -e 's/[jJ][aA][nN]/1/'  \
              -e 's/[fF][eE][bB]/2/'  \
              -e 's/[mM][aA][rR]/3/'  \
@@ -43,6 +55,9 @@ month=`echo ${date_header} | awk '{print $3;}' \
              -e 's/[nN][oO][vV]/11/' \
              -e 's/[dD][eE][cC]/12/' `
 
+if [ 1 -eq ${flag_debug} ]; then
+  echo "DEBUG: month == ${month}"
+fi
 
 printf "%02d/%02d" "${month}" "${dayom}"
 
