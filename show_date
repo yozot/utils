@@ -35,7 +35,7 @@ fi
 ## dayom=`echo ${date_header} | awk '{print $2;}' | sed 's/^0*//'`
 ## month=`echo ${date_header} | awk '{print $3;}' \
 
-dayom=`echo ${date_header} | sed -E 's/^(([a-zA-Z][a-zA-Z][a-zA-Z],)*[ \t]*(0?[1-9]|[12][0-9]|3[01])[ \t]*([a-zA-Z][a-zA-Z][a-zA-Z]).*)$/\3/'`
+dayom=`echo ${date_header} | sed -E 's/^(([a-zA-Z][a-zA-Z][a-zA-Z],)*[ \t]*(0?[1-9]|[12][0-9]|3[01])[ \t]*([a-zA-Z][a-zA-Z][a-zA-Z]).*)$/\3/' | sed 's/^0*//'`
 
 if [ 1 -eq ${flag_debug} ]; then
   echo "DEBUG: dayofm == ${dayom}"
