@@ -109,7 +109,7 @@ while read LINE; do
   fi
   (echo "${LINE}" | egrep -q '^ENCODED: ') \
                                    && (arg=`echo "${LINE}" | sed 's/^ENCODED: *//'` && decode "$arg"  ) \
-                                   || (echo "${LINE}" | sed 's/\040//g')
+                                   || (echo "${LINE}" | sed 's/\040/ /g')
 done | tr -d '\n'
 
 
