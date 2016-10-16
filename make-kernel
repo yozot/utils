@@ -16,7 +16,7 @@
 ## date command added in the first part -- yozo.  Tue Apr 10 14:28:32 JST 2001
 ## starting messages beautified -- yozo.  Thu Apr 26 16:28:09 JST 2001
 
-PATH=/usr/bin:/bin
+PATH=/usr/bin:/bin:/usr/sbin/:/sbin
 
 if [ $# != 1 ] ; then
   echo "specify configuration file name (e.g., GENERIC)." ;
@@ -53,10 +53,10 @@ else
   exit 10
 fi
 
-if [ -d ${COMPILEDIR} ] ; then
-  echo "$0: ${COMPILEDIR} exists."
-  #### move to compile directory
-  cd ${COMPILEDIR}
+if [ -d ${COMPILEDIR}/obj ] ; then
+  echo "$0: ${COMPILEDIR}/obj exists."
+  #### move to compile obj directory
+  cd ${COMPILEDIR}/obj
   echo -n "$0: current dir is "
   pwd
   echo -n "$0: disk usage(du -sk .) -- "
@@ -69,7 +69,7 @@ if [ -d ${COMPILEDIR} ] ; then
   du -sk .
   ls -aCFt
 else
-  echo "$0: ${COMPILEDIR} does not exist."
+  echo "$0: ${COMPILEDIR}/obj does not exist."
 fi
 
 #### move to config directory
@@ -77,11 +77,11 @@ cd ${CONFDIR}
 echo -n "$0: current dir is "
 pwd
 ls -alt
-echo "$0: head ${KERNELCONF} ======"
+echo "$0: head ${KERNELCONF} vvvv======"
 head ${KERNELCONF}
-echo "$0: head ${KERNELCONF} ======"
+echo "$0: head ${KERNELCONF} ^^^^======"
 
-/usr/sbin/config ${KERNELCONF}
+## /usr/sbin/config ${KERNELCONF}
 
 #### back to compile directory
 cd ${COMPILEDIR}
@@ -91,11 +91,12 @@ echo -n "$0: disk usage(du -sk .) -- "
 du -sk .
 ls -aCFt
 
-echo -n "$0: \"make depend\" and \"make\" start..."
+echo "$0: \"make obj\" and \"make config\" and \"make depend\" and \"make\" start..."
 date
-make depend && make
+make obj && make config && make depend && make
 date
 
+echo -n "$0: disk usage(du -sk .) -- "
 du -sk .
 df -k
 
