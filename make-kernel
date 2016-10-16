@@ -23,7 +23,7 @@ if [ $# != 1 ] ; then
   echo "\tusage: $0 configfile"
   exit 10
 fi
-KERNELCONF=$1
+KERNELCONF="$1"
 
 MACH=`uname -m`
 
@@ -42,21 +42,21 @@ echo -n "$0: "
 uname -a
 echo
 
-ls -alt ${LOGDIR}
+ls -alt "${LOGDIR}"
 df -k
 echo
 
-if [ -d ${CONFDIR} ] ; then
+if [ -d "${CONFDIR}" ] ; then
   echo "$0: ${CONFDIR} exists."
 else
   echo "$0: ${CONFDIR} does not exist. check it."
   exit 10
 fi
 
-if [ -d ${COMPILEDIR}/obj ] ; then
+if [ -d "${COMPILEDIR}/obj" ] ; then
   echo "$0: ${COMPILEDIR}/obj exists."
   #### move to compile obj directory
-  cd ${COMPILEDIR}/obj
+  cd "${COMPILEDIR}/obj"
   echo -n "$0: current dir is "
   pwd
   echo -n "$0: disk usage(du -sk .) -- "
@@ -73,18 +73,18 @@ else
 fi
 
 #### move to config directory
-cd ${CONFDIR}
+cd "${CONFDIR}"
 echo -n "$0: current dir is "
 pwd
 ls -alt
 echo "$0: head ${KERNELCONF} vvvv======"
-head ${KERNELCONF}
+head "${KERNELCONF}"
 echo "$0: head ${KERNELCONF} ^^^^======"
 
 ## /usr/sbin/config ${KERNELCONF}
 
 #### back to compile directory
-cd ${COMPILEDIR}
+cd "${COMPILEDIR}"
 echo -n "$0: current dir is "
 pwd
 echo -n "$0: disk usage(du -sk .) -- "
