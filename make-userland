@@ -50,7 +50,7 @@ if [ -d ${OBJDIR} ] ; then
   fi
   echo "$0: start cleaning now..."
   mkdir OLD
-  mv bin distrib games gnu kerberosIV kerberosV lib libexec regress sbin share sys usr.bin usr.sbin OLD
+  mv bin distrib games gnu kerberosIV kerberosV lib libexec regress sbin share usr.bin usr.sbin OLD
   echo "$0: removing OLD directory in background."
   rm -rf OLD &
   ls -aFl
