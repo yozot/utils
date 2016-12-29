@@ -91,7 +91,7 @@ done
 ## removing dev directory
 find . -type d -empty -exec rmdir {} \;
 
-cmp-and-rm-dirs var/*/*/*/*/* var/*/*/*/* var/*/*/* var/*/* var/* var etc/* etc
+cmp-and-rm-dirs usr/*/* usr/* usr var/*/*/*/*/* var/*/*/*/* var/*/*/* var/*/* var/* var etc/* etc
 
 if [ -d etc/mail ]; then
   for f in `ls etc/mail` ; do
