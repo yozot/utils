@@ -14,8 +14,8 @@ OBJDIR=/usr/xobj
 OBJOLDDIR=${OBJDIR}/.OLD
 ## OBJBUILDDIR=${OBJDIR}/XF4
 EXISTS_OBJDIR="YES" ## assumes obj dir by default
-XDMDIR=/etc/X11/xdm
-XDMOLDDIR=/etc/X11/xdm_old
+XDMDIR=/etc/X11/xenodm
+XDMOLDDIR=/etc/X11/xenodm_old
 ## DESTDIR=/var/tmp/xenocara
 ## XENOCARA_TOP and XENOCARA_OBJDIR defined in /usr/X11R6/share/mk/bsd.xorg.mk.
 ## /usr/X11R6/share/mk/bsd.xorg.mk revised.
