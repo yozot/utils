@@ -112,9 +112,6 @@ while read LINE; do
                                    || (echo "${LINE}" | sed 's/\040/ /g')
 done | tr -d '\n'
 
-
-echo ""
-
 if [ ${flag_debug} -eq 1 ]; then
   echo "working files ${TMPFILE1} and ${TMPFILE2} left un-removed..." 1>&2
 else
