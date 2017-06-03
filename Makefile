@@ -4,7 +4,7 @@ FILES= rotlogs clean cmp-and-remove do-cvs \
        make-fakedist make-kernel make-userland make-xf4 make-xenocara \
        checksites marks picks pu smime vaio xtermtitle \
        getpgpkey viewtext viewurl acpibat spamcheck ypkg smartless \
-       show_date show_subject yscan
+       show_date show_subject show_from yscan
 
 INSTALLDIR=${HOME}/bin
 INSTALL=/usr/bin/install
