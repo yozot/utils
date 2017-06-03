@@ -55,7 +55,7 @@ TMPFILE2=`mktemp /tmp/XXXXXXXXXX` || exit 20
 
 sed '/^$/,$d' | sed -n '/^[sS][uU][bB][jJ][eE][cC][tT]:/,$p' > "${TMPFILE1}"
 
-FIRST=`head -1 "${TMPFILE1}" | sed 's/^Subject:[ 	]*//'`
+FIRST=`head -1 "${TMPFILE1}" | sed 's/^[sS][uU][bB][jJ][eE][cC][tT]:[ 	]*//'`
 REMAIN=`tail -n +2 < "${TMPFILE1}" | sed '/^[^ 	]/,$d' | sed 's/^[ 	]*//'`
 
 echo "${FIRST}${REMAIN}" | tr -d '\n' > "${TMPFILE1}"
