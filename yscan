@@ -2,6 +2,7 @@
 ## $Id: yscan,v 1.3 2015/04/19 17:53:27 yozo Exp $
 ##
 
+SHOW_FROM="show_from"
 SHOW_DATE="show_date"
 SHOW_SUBJECT="show_subject"
 
@@ -50,10 +51,11 @@ do
     exit 20
   fi
   FILEbasename=`basename "${FILE}"`
+  from=`cat "${FILE}" | "${SHOW_FROM}"`
   date=`cat "${FILE}" | "${SHOW_DATE}"`
   subject=`cat "${FILE}" | "${SHOW_SUBJECT}"`
 
-  echo "${FILEbasename}  ${date} ${subject}"
+  echo "${FILEbasename}  ${date} ${from} ${subject}"
 
 done
 
