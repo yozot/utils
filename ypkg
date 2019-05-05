@@ -137,9 +137,12 @@ check(){
     elif [ -d "${PORTSDIR}/${pkgpath}" ]; then
       pkgpath="${PORTSDIR}/${pkgpath}"
     else
-      (echo "no pkgpath exists..." 1>&2)
-      exit 20
+      fullpkgname="NOPKGPATH"
     fi
+
+    if [ "NOPKGPATH" = "${fullpkgname}" ]; then
+      echo "${i} : NO PKGPATH EXISTS..."
+    else
 
     if [ -n "${flav}" ]; then
       if [ -n "${subpack}" ]; then
@@ -161,6 +164,8 @@ check(){
 
     if [ "${i}" != "${fullpkgname}" ]; then
       echo "${i} : update available as ${fullpkgname} ${ismystuff}"
+    fi
+
     fi
   done
 }
