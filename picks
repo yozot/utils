@@ -60,7 +60,7 @@ echo
 do_command pick list-owner  cert-advisory cert
 ## do_command pick sender     snmp-forum    certsnmp
 do_command pick return-path @ncas.us-cert.gov uscert
-do_command pick return-path    announce-admin@jpcert       jpcert
+do_command pick return-path    announce-bounces@jpcert       jpcert
 do_command pick list-id     bugtraq-jp    traqjp
 do_command pick return-path magazine@cyberpolice    cyberpolice
 
