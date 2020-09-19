@@ -131,7 +131,7 @@ do_command pick x-ml-name   mgp           mgp
 do_command search           nmh-workers   nmh
 ## do_command pick x-loop      nmh           nmh
 ## do_command pick received    nmh-          nmh
-do_command pick return-path @amazon.co.jp amazon
+do_command pick return-path @bounces.amazon.co.jp amazon
 do_command pick return-path crisp-bounces crisp
 
 do_command pick x-ml-name   sv            sv
