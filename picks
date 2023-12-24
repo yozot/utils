@@ -90,7 +90,7 @@ do_command pick sender      owner-tnt     metrotnt
 do_command pick x-ml-name   semiken       metrosemiken
 do_command pick sender      owner-ug      metroug
 
-do_command pick x-ml-name   comp-alge     compalge
+do_command pick list-id     comp-alge     compalge
 
 do_command pick from        "SDC Program" sunsdc
 do_command search "solaris  develop"      sunsoldc
