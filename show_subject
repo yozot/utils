@@ -76,7 +76,10 @@ ENCODED: shift-jis?\1?\2\
 ENCODED: utf-8?\1?\2\
 /g' \
               -e 's/=?[gG][bB]2312?\([bBqQ]\)?\([^?][^?]*\)?=/\
-ENCODED: gb2312?\1?\2\
+ENCODED: gb18030?\1?\2\
+/g' \
+              -e 's/=?[gG][bB]18030?\([bBqQ]\)?\([^?][^?]*\)?=/\
+ENCODED: gb18030?\1?\2\
 /g' \
               -e 's/=?[eE][uU][cC][-_][kK][rR]?\([bBqQ]\)?\([^?][^?]*\)?=/\
 ENCODED: euc-kr?\1?\2\
